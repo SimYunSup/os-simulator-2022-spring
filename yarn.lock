@@ -615,6 +615,24 @@
   dependencies:
     tslib "^2.1.0"
 
+"@material/button@^13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@material/button/-/button-13.0.0.tgz#0870da4069fb92dd5c3dbbaf1b58bcb62bb9dbed"
+  integrity sha512-lYorht6fcEd4P+dsLVp2BGtaY5cGYNp71LMajuDe71GZX3dZPoKeVvb+Ie1S7vcB+o+WLTeaisMk9/vA4gfi8A==
+  dependencies:
+    "@material/density" "^13.0.0"
+    "@material/dom" "^13.0.0"
+    "@material/elevation" "^13.0.0"
+    "@material/feature-targeting" "^13.0.0"
+    "@material/ripple" "^13.0.0"
+    "@material/rtl" "^13.0.0"
+    "@material/shape" "^13.0.0"
+    "@material/theme" "^13.0.0"
+    "@material/tokens" "^13.0.0"
+    "@material/touch-target" "^13.0.0"
+    "@material/typography" "^13.0.0"
+    tslib "^2.1.0"
+
 "@material/checkbox@^13.0.0":
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/@material/checkbox/-/checkbox-13.0.0.tgz#ee7ca7930586102a748998239672f62724a90ad9"
@@ -905,6 +923,13 @@
     "@material/feature-targeting" "^13.0.0"
     tslib "^2.1.0"
 
+"@material/tokens@^13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@material/tokens/-/tokens-13.0.0.tgz#dbd85201dca575b79fe03788479e77b913d20f9c"
+  integrity sha512-t55CKVeAjABdSQCKjsvYvqrA6Z4f5varLpLloai8ZQU0giSl7qbUczV1i8y2pSOzpRTswD5JKM7a19qfsl/TCA==
+  dependencies:
+    "@material/elevation" "^13.0.0"
+
 "@material/touch-target@^13.0.0":
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/@material/touch-target/-/touch-target-13.0.0.tgz#330d0b03988f65916cce3a97f38c5b9d74104a27"
@@ -1032,6 +1057,20 @@
   integrity sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@smui/button@^6.0.0-beta.15":
+  version "6.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@smui/button/-/button-6.0.0-beta.15.tgz#2efc44ca58815221f8ed70d561163862b6ef4ab3"
+  integrity sha512-0byc0VyBh5xXLHX8nR9R9/16uaMiNxCkHhm9fcz7Mq761qjxIt34AK8jlDOQQfLCP3/0PLNJjGk2+r+WtTaazA==
+  dependencies:
+    "@material/button" "^13.0.0"
+    "@material/elevation" "^13.0.0"
+    "@material/feature-targeting" "^13.0.0"
+    "@material/ripple" "^13.0.0"
+    "@material/theme" "^13.0.0"
+    "@smui/common" "^6.0.0-beta.15"
+    "@smui/ripple" "^6.0.0-beta.15"
+    svelte2tsx "^0.4.14"
 
 "@smui/checkbox@^6.0.0-beta.15":
   version "6.0.0-beta.15"
