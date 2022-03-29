@@ -86,7 +86,6 @@ export default {
 		svelte({
 			preprocess: sveltePreprocess({
 				sourceMap: !production,
-				postcss: true,
 				scss: {
 					includePaths: ["app/**/*.scss", "node_modules"],
 				},
@@ -97,7 +96,7 @@ export default {
 			},
 		}),
 		smelte({
-			purge: production,
+			output: "dist/global.css",
 		}),
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
