@@ -13,6 +13,7 @@ import alias from "@rollup/plugin-alias";
 import path from "path";
 import { spawn } from "child_process";
 import dotenv from "dotenv";
+import smelte from "smelte/rollup-plugin-smelte";
 
 dotenv.config();
 
@@ -33,10 +34,14 @@ function serve() {
 			if (server) {
 				return;
 			}
-			server = spawn("npm", ["run", "start", "--", "--dev", "--port", "5000"], {
-				stdio: ["ignore", "inherit", "inherit"],
-				shell: true,
-			});
+			server = spawn(
+				"npm",
+				["run", "start", "--", "--dev", "--port", "5000"],
+				{
+					stdio: ["ignore", "inherit", "inherit"],
+					shell: true,
+				}
+			);
 
 			process.on("SIGTERM", toExit);
 			process.on("exit", toExit);
@@ -51,7 +56,9 @@ function tsalias() {
 		paths.push({
 			replacement: path.resolve(
 				path.resolve(__dirname),
-				tsconfig.compilerOptions.paths[value][0].replace("./", "").replace("/*", ""),
+				tsconfig.compilerOptions.paths[value][0]
+					.replace("./", "")
+					.replace("/*", "")
 			),
 			find: value.replace("./", "").replace("/*", ""),
 		});
@@ -79,14 +86,19 @@ export default {
 		svelte({
 			preprocess: sveltePreprocess({
 				sourceMap: !production,
-				scss: { includePaths: ["app/**/*.scss"] },
+				postcss: true,
+				scss: {
+					includePaths: ["app/**/*.scss", "node_modules"],
+				},
 			}),
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production,
 			},
 		}),
-
+		smelte({
+			purge: production,
+		}),
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
