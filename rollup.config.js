@@ -13,7 +13,7 @@ import alias from "@rollup/plugin-alias";
 import path from "path";
 import { spawn } from "child_process";
 import dotenv from "dotenv";
-import smelte from "smelte/rollup-plugin-smelte";
+import replace from "@rollup/plugin-replace";
 
 dotenv.config();
 
@@ -95,9 +95,6 @@ export default {
 				dev: !production,
 			},
 		}),
-		smelte({
-			output: "dist/global.css",
-		}),
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
@@ -135,6 +132,9 @@ export default {
 					comments: false,
 				},
 			}),
+		replace({
+			"process.env.NODE_ENV": process.env.NODE_ENV,
+		}),
 	],
 
 	watch: {
