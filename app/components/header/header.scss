@@ -1,0 +1,19 @@
+.header {
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	height: 80px;
+	background-color: #bf9e75;
+
+	&__content {
+		display: flex;
+		justify-content: center;
+		margin: 0 auto;
+		width: 600px;
+	}
+
+	&__button {
+		height: 60px;
+		line-height: 20px;
+	}
+}

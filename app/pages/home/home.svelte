@@ -1,14 +1,12 @@
 <script lang="ts">
+	import Header from "@components/header/header.svelte";
 </script>
 
-<div id="container">
-	<section class="hero is-medium is-primary is-bold">
-		<div class="hero-body">
-			<div class="container">hello</div>
-		</div>
-	</section>
-	<div class="content has-text-centered">app/pages/home.svelte</div>
-</div>
+<Header />
+
+<main class="home">
+	
+</main>
 
 <style lang="scss">
 	@import "./home.scss";
