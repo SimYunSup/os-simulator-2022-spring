@@ -31,8 +31,10 @@
 		"prepare": "ts-patch install -s && husky install"
 	},
 	"dependencies": {
+		"@xstate/svelte": "^0.2.1",
 		"smelte": "^1.1.8",
-		"svelte-spa-router": "^3.2.0"
+		"svelte-spa-router": "^3.2.0",
+		"xstate": "^4.30.6"
 	},
 	"devDependencies": {
 		"@rollup/plugin-alias": "^3.1.9",
