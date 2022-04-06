@@ -1,4 +1,4 @@
-import { createMachine, send } from "xstate";
+import { createMachine, send as sendGlobal } from "xstate";
 import type { TMethod } from "@app/types/method.interface";
 import { useMachine } from "@xstate/svelte";
 
@@ -139,11 +139,9 @@ const scheduleMachine = createMachine(
 				);
 			},
 			sendCPU: (context, event) => {
-				console.log(event.payload);
 				context.cpuData = Array.from(event.payload.cpuData);
 			},
 			setupCPU: (context) => {
-				console.log("setup complete");
 				context.cpuWorker = Array.from(
 					{ length: context.cpuData.length },
 					(_, index) => {
