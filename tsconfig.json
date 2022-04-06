@@ -3,7 +3,7 @@
 		"target": "es6",
 		"sourceMap": true,
 		"outDir": "./dist/",
-		"lib": ["esnext", "DOM"],
+		"lib": ["esnext", "DOM", "webworker"],
 		"baseUrl": ".",
 		"resolveJsonModule": true,
 		"moduleResolution": "node",
@@ -28,9 +28,18 @@
 		"typeRoots": ["app/**/types", "node_modules/@types"],
 		"plugins": [
 			{ "transform": "typescript-transform-paths" },
-			{ "transform": "typescript-transform-paths", "afterDeclarations": true }
+			{
+				"transform": "typescript-transform-paths",
+				"afterDeclarations": true
+			}
 		]
 	},
 	"include": ["app/**/*"],
-	"exclude": ["node_modules/*", "dist/*", "scripts/*", "examples/*", "electron/**/*"]
+	"exclude": [
+		"node_modules/*",
+		"dist/*",
+		"scripts/*",
+		"examples/*",
+		"electron/**/*"
+	]
 }

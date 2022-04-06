@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { SCHEDULE_METHOD } from "@app/types/method.interface";
 	import type { TMethod } from "@app/types/method.interface";
-	import { useMachine } from "@xstate/svelte";
-	import scheduleMachine from "@app/store/schedule.store";
-	import { afterUpdate } from "svelte";
+	import { state, send, service } from "@app/store/schedule.store";
 
 	let selectedMethod: TMethod = SCHEDULE_METHOD[0].name;
 	let quantum: string;
-	const { state, send } = useMachine(scheduleMachine);
-	afterUpdate(() => {
-		if ($state.matches("setup.pending.type.idle")) {
+	service.onTransition((state) => {
+		if (state.matches("setup.pending.type.idle")) {
 			send({
 				type: "send.type",
 				payload: {

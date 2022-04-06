@@ -22,3 +22,10 @@ export const SCHEDULE_METHOD = [
 ] as const;
 
 export type TMethod = typeof SCHEDULE_METHOD[number]["name"];
+
+export type TCPUType = "P" | "E";
+
+export interface TProcess {
+	burstTime: number;
+	arrivalTime: number;
+}

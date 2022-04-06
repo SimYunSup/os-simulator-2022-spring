@@ -1,5 +1,6 @@
-import { createMachine } from "xstate";
+import { createMachine, send } from "xstate";
 import type { TMethod } from "@app/types/method.interface";
+import { useMachine } from "@xstate/svelte";
 
 const scheduleMachine = createMachine(
 	{
@@ -7,6 +8,8 @@ const scheduleMachine = createMachine(
 			type: "FCFS" as TMethod,
 			quantum: 1,
 			processData: [],
+			cpuData: [],
+			cpuWorker: [] as Worker[],
 		},
 		initial: "setup",
 		states: {
@@ -31,6 +34,7 @@ const scheduleMachine = createMachine(
 										on: {
 											"send.process": {
 												target: "complete",
+												actions: ["sendProcess"],
 											},
 										},
 									},
@@ -58,6 +62,7 @@ const scheduleMachine = createMachine(
 										on: {
 											"send.cpu": {
 												target: "complete",
+												actions: ["sendCPU"],
 											},
 										},
 									},
@@ -67,6 +72,7 @@ const scheduleMachine = createMachine(
 						},
 						onDone: {
 							target: "complete",
+							actions: ["setupCPU"],
 						},
 					},
 					complete: {
@@ -127,8 +133,34 @@ const scheduleMachine = createMachine(
 					? Number(event.payload.quantum)
 					: 2;
 			},
+			sendProcess: (context, event) => {
+				context.processData = JSON.parse(
+					JSON.stringify(event.payload.processData)
+				);
+			},
+			sendCPU: (context, event) => {
+				console.log(event.payload);
+				context.cpuData = Array.from(event.payload.cpuData);
+			},
+			setupCPU: (context) => {
+				console.log("setup complete");
+				context.cpuWorker = Array.from(
+					{ length: context.cpuData.length },
+					(_, index) => {
+						const newWorker = new Worker(
+							"../worker/coreWorker.js",
+							{ type: "module" }
+						);
+						newWorker.postMessage({
+							type: "setup",
+							value: context.cpuData[index],
+						});
+						return newWorker;
+					}
+				);
+			},
 		},
 	}
 );
 
-export default scheduleMachine;
+export const { state, send, service } = useMachine(scheduleMachine);

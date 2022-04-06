@@ -1,0 +1,15 @@
+.processtable {
+	display: inline-block;
+	position: relative;
+	margin-right: 20px;
+
+	&__table {
+		margin: 0 auto;
+		& tr {
+			padding: 2px;
+		}
+		& td {
+			text-align: center;
+		}
+	}
+}

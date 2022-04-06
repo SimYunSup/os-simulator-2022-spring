@@ -1,11 +1,16 @@
 <script lang="ts">
 	import Header from "@components/header/header.svelte";
+	import ProcessTable from "@components/ProcessTable/ProcessTable.svelte";
+	import CPUTable from "@components/CPUTable/CPUTable.svelte";
 </script>
 
 <Header />
 
 <main class="home">
-	
+	<div class="home__setting">
+		<ProcessTable />
+		<CPUTable />
+	</div>
 </main>
 
 <style lang="scss">

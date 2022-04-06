@@ -67,77 +67,80 @@ function tsalias() {
 	return paths;
 }
 
-export default {
-	input: "app/core/init.ts",
-	output: {
-		sourcemap: true,
-		format: "iife",
-		name: "app",
-		file: "dist/bundle.js",
-	},
-	plugins: [
-		json(),
-		copy({
-			targets: [
-				{ src: "public/**/*", dest: "dist" },
-				{ src: "assets/**/*", dest: "dist" },
-			],
-		}),
-		svelte({
-			preprocess: sveltePreprocess({
-				sourceMap: !production,
-				scss: {
-					includePaths: ["app/**/*.scss", "node_modules"],
+export default [
+	{
+		input: "app/core/init.ts",
+		output: {
+			sourcemap: true,
+			format: "iife",
+			name: "app",
+			file: "dist/bundle.js",
+		},
+		plugins: [
+			json(),
+			copy({
+				targets: [
+					{ src: "public/**/*", dest: "dist" },
+					{ src: "assets/**/*", dest: "dist" },
+					{ src: "app/worker/**/*", dest: "dist/worker" },
+				],
+			}),
+			svelte({
+				preprocess: sveltePreprocess({
+					sourceMap: !production,
+					scss: {
+						includePaths: ["app/**/*.scss", "node_modules"],
+					},
+				}),
+				compilerOptions: {
+					// enable run-time checks when not in production
+					dev: !production,
 				},
 			}),
-			compilerOptions: {
-				// enable run-time checks when not in production
-				dev: !production,
-			},
-		}),
-		// If you have external dependencies installed from
-		// npm, you'll most likely need these plugins. In
-		// some cases you'll need additional configuration -
-		// consult the documentation for details:
-		// https://github.com/rollup/plugins/tree/master/packages/commonjs
-		resolve({
-			browser: true,
-			dedupe: ["svelte"],
-		}),
-		alias({
-			entries: tsalias(),
-		}),
-		commonjs(),
-		typescript({
-			sourceMap: true,
-			inlineSources: !production,
-		}),
-		// we'll extract any component CSS out into
-		// a separate file - better for performance
-		css({ output: "bundle.css" }),
-
-		// In dev mode, call `npm run start` once
-		// the bundle has been generated
-		!production && serve(),
-
-		// Watch the `public` directory and refresh the
-		// browser on changes when not in production
-		!production && livereload({ watch: "dist", delay: 200 }),
-
-		// If we're building for production (npm run build
-		// instead of npm run dev), minify
-		production &&
-			terser({
-				output: {
-					comments: false,
-				},
+			// If you have external dependencies installed from
+			// npm, you'll most likely need these plugins. In
+			// some cases you'll need additional configuration -
+			// consult the documentation for details:
+			// https://github.com/rollup/plugins/tree/master/packages/commonjs
+			resolve({
+				browser: true,
+				dedupe: ["svelte"],
 			}),
-		replace({
-			"process.env.NODE_ENV": process.env.NODE_ENV,
-		}),
-	],
+			alias({
+				entries: tsalias(),
+			}),
+			commonjs(),
+			typescript({
+				sourceMap: true,
+				inlineSources: !production,
+			}),
+			// we'll extract any component CSS out into
+			// a separate file - better for performance
+			css({ output: "bundle.css" }),
 
-	watch: {
-		clearScreen: false,
+			// In dev mode, call `npm run start` once
+			// the bundle has been generated
+			!production && serve(),
+
+			// Watch the `public` directory and refresh the
+			// browser on changes when not in production
+			!production && livereload({ watch: "dist", delay: 200 }),
+
+			// If we're building for production (npm run build
+			// instead of npm run dev), minify
+			production &&
+				terser({
+					output: {
+						comments: false,
+					},
+				}),
+			replace({
+				"process.env.NODE_ENV": process.env.NODE_ENV,
+			}),
+		],
+
+		watch: {
+			clearScreen: false,
+		},
 	},
-};
+];
