@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { state, send, service } from "@app/store/schedule.store";
 	import type { TProcess } from "@app/types/method.interface";
+	import indexColor from "@app/constant/color";
 
 	let processData: TProcess[] = [
 		{
@@ -28,24 +29,6 @@
 		newProcessData.splice(index, 1);
 		processData = newProcessData;
 	};
-	const indexColor = [
-		"#ADD8E6",
-		"#DEB887",
-		"#F5FFFA",
-		"#00FF7F",
-		"#DA70D6",
-		"#DB7093",
-		"#DCDCDC",
-		"#9400D3",
-		"#E6E6FA",
-		"#ADFF2F",
-		"#FF8C00",
-		"#1E90FF",
-		"#BA55D3",
-		"#FF4500",
-		"#7FFFD4",
-		"#FF1493",
-	];
 	service.onTransition((state) => {
 		if (state.matches("setup.pending.process.idle")) {
 			send({

@@ -2,6 +2,7 @@
 	import Header from "@components/header/header.svelte";
 	import ProcessTable from "@components/ProcessTable/ProcessTable.svelte";
 	import CPUTable from "@components/CPUTable/CPUTable.svelte";
+	import ReadyQueue from "@components/ReadyQueue/ReadyQueue.svelte";
 </script>
 
 <Header />
@@ -10,6 +11,7 @@
 	<div class="home__setting">
 		<ProcessTable />
 		<CPUTable />
+		<ReadyQueue />
 	</div>
 </main>
 

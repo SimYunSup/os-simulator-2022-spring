@@ -1,12 +1,13 @@
 import { createMachine, send as sendGlobal } from "xstate";
-import type { TMethod } from "@app/types/method.interface";
+import type { TMethod, TProcess } from "@app/types/method.interface";
 import { useMachine } from "@xstate/svelte";
-import {
-	scheduleFCFS,
-	type TCurrentTask,
-	type TNamedProcess,
-} from "@app/helper/schedule.helper";
 
+export type TNamedProcess = TProcess & { id: number };
+
+export type TCurrentTask = {
+	remainedTime: number;
+	process: TNamedProcess;
+};
 const scheduleMachine = createMachine(
 	{
 		context: {
@@ -16,7 +17,7 @@ const scheduleMachine = createMachine(
 			cpuData: [],
 			queue: [] as Array<Array<TNamedProcess>>,
 			currentTime: 0,
-			currentTask: [null, null, null, null] as Array<TCurrentTask | null>,
+			currentTask: [] as Array<TCurrentTask | null>,
 			taskHistoryArray: [] as Array<Array<number>>,
 		},
 		initial: "setup",
@@ -148,19 +149,53 @@ const scheduleMachine = createMachine(
 			},
 			sendCPU: (context, event) => {
 				context.cpuData = Array.from(event.payload.cpuData);
+				context.queue = Array.from(
+					{ length: event.payload.cpuData.length },
+					() => []
+				);
+				context.taskHistoryArray = Array.from(
+					{ length: event.payload.cpuData.length },
+					() => []
+				);
+				context.currentTask = Array.from(
+					{ length: event.payload.cpuData.length },
+					() => null
+				);
 			},
 			scheduleProcess: (context) => {
-				switch (context.type) {
-					case "FCFS":
-						scheduleFCFS(
-							context.processData,
-							context.queue,
-							context.currentTask,
-							context.currentTime
-						);
-						break;
-					default:
-						console.log("not yet");
+				if (context.type === "FCFS") {
+					const nextTasks = context.currentTask.map((task) => {
+						if (!task || task.remainedTime === 0) {
+							return null;
+						}
+						return task;
+					});
+					context.processData
+						.filter(
+							(process) =>
+								process.arrivalTime === context.currentTime
+						)
+						.forEach((process, index) => {
+							context.queue[index % context.queue.length].push(
+								process
+							);
+						});
+					context.currentTask = nextTasks.map((task, index) => {
+						if (task === null) {
+							const nextTask = context.queue[index].shift() as
+								| TNamedProcess
+								| undefined;
+							if (!nextTask) {
+								return null;
+							}
+
+							return {
+								remainedTime: nextTask.burstTime,
+								process: nextTask,
+							};
+						}
+						return task;
+					});
 				}
 			},
 			workProcess: (context) => {
