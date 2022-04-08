@@ -1,15 +1,23 @@
 import { createMachine, send as sendGlobal } from "xstate";
 import type { TMethod } from "@app/types/method.interface";
 import { useMachine } from "@xstate/svelte";
+import {
+	scheduleFCFS,
+	type TCurrentTask,
+	type TNamedProcess,
+} from "@app/helper/schedule.helper";
 
 const scheduleMachine = createMachine(
 	{
 		context: {
 			type: "FCFS" as TMethod,
 			quantum: 1,
-			processData: [],
+			processData: [] as Array<TNamedProcess>,
 			cpuData: [],
-			cpuWorker: [] as Worker[],
+			queue: [] as Array<Array<TNamedProcess>>,
+			currentTime: 0,
+			currentTask: [null, null, null, null] as Array<TCurrentTask | null>,
+			taskHistoryArray: [] as Array<Array<number>>,
 		},
 		initial: "setup",
 		states: {
@@ -72,7 +80,7 @@ const scheduleMachine = createMachine(
 						},
 						onDone: {
 							target: "complete",
-							actions: ["setupCPU"],
+							actions: ["scheduleProcess"],
 						},
 					},
 					complete: {
@@ -86,26 +94,22 @@ const scheduleMachine = createMachine(
 				initial: "scheduling",
 				states: {
 					scheduling: {
-						on: {
-							work: {
-								target: "working",
-							},
-							done: {
+						after: {
+							0: {
 								target: "complete",
+								cond: "isWorkEnd",
+							},
+							1000: {
+								target: "working",
+								actions: ["workProcess"],
 							},
 						},
 					},
 					working: {
 						on: {
-							draw: {
-								target: "drawing",
-							},
-						},
-					},
-					drawing: {
-						on: {
 							schedule: {
 								target: "scheduling",
+								actions: ["scheduleProcess"],
 							},
 						},
 					},
@@ -134,27 +138,64 @@ const scheduleMachine = createMachine(
 					: 2;
 			},
 			sendProcess: (context, event) => {
-				context.processData = JSON.parse(
-					JSON.stringify(event.payload.processData)
+				context.processData = (
+					JSON.parse(
+						JSON.stringify(event.payload.processData)
+					) as Array<TNamedProcess>
+				).sort(
+					(first, second) => first.arrivalTime - second.arrivalTime
 				);
 			},
 			sendCPU: (context, event) => {
 				context.cpuData = Array.from(event.payload.cpuData);
 			},
-			setupCPU: (context) => {
-				context.cpuWorker = Array.from(
-					{ length: context.cpuData.length },
-					(_, index) => {
-						const newWorker = new Worker(
-							"../worker/coreWorker.js",
-							{ type: "module" }
+			scheduleProcess: (context) => {
+				switch (context.type) {
+					case "FCFS":
+						scheduleFCFS(
+							context.processData,
+							context.queue,
+							context.currentTask,
+							context.currentTime
 						);
-						newWorker.postMessage({
-							type: "setup",
-							value: context.cpuData[index],
-						});
-						return newWorker;
+						break;
+					default:
+						console.log("not yet");
+				}
+			},
+			workProcess: (context) => {
+				context.currentTask = context.currentTask.map((task) => {
+					if (!task) {
+						return null;
 					}
+					return {
+						remainedTime: task?.remainedTime - 1,
+						process: {
+							...task.process,
+							burstTime: task.process.burstTime - 1,
+						},
+					};
+				});
+				context.taskHistoryArray = context.taskHistoryArray.map(
+					(taskHistory, index) => {
+						const nextTaskHistory = Array.from(taskHistory);
+						nextTaskHistory.push(
+							context.currentTask[index]?.process.id ?? -1
+						);
+						return nextTaskHistory;
+					}
+				);
+			},
+		},
+		guards: {
+			isWorkEnd: (context) => {
+				return !(
+					context.queue.findIndex(
+						(queuedTask) => queuedTask.length !== 0
+					) === -1 &&
+					context.processData.findIndex(
+						(process) => process.arrivalTime > context.currentTime
+					) === -1
 				);
 			},
 		},

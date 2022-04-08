@@ -51,7 +51,10 @@
 			send({
 				type: "send.process",
 				payload: {
-					processData,
+					processData: processData.map((process, index) => ({
+						...process,
+						id: index,
+					})),
 				},
 			});
 		}

@@ -19,6 +19,7 @@
 	};
 	service.onTransition((state) => {
 		if (state.matches("setup.pending.cpu.idle")) {
+			cpuData.sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0));
 			send({
 				type: "send.cpu",
 				payload: {
