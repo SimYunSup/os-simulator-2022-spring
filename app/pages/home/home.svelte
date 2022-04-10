@@ -3,6 +3,7 @@
 	import ProcessTable from "@components/ProcessTable/ProcessTable.svelte";
 	import CPUTable from "@components/CPUTable/CPUTable.svelte";
 	import ReadyQueue from "@components/ReadyQueue/ReadyQueue.svelte";
+	import GanttChart from "@components/GanttChart/GanttChart.svelte";
 </script>
 
 <Header />
@@ -12,6 +13,7 @@
 		<ProcessTable />
 		<CPUTable />
 		<ReadyQueue />
+		<GanttChart />
 	</div>
 </main>
 
