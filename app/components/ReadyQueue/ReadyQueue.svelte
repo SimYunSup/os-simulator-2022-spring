@@ -1,15 +1,9 @@
 <script lang="ts">
 	import indexColor from "@app/constant/color";
 
-	import {
-		state,
-		send,
-		service,
-		type TNamedProcess,
-	} from "@app/store/schedule.store";
+	import { service, type TNamedProcess } from "@app/store/schedule.store";
 	let queue: Array<Array<TNamedProcess>>;
 	service.subscribe((state) => {
-		console.log(state.context.queue);
 		queue = state.context.queue;
 	});
 </script>

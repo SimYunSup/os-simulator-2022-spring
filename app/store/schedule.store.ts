@@ -11,7 +11,7 @@ export type TCurrentTask = {
 const scheduleMachine = createMachine(
 	{
 		context: {
-			type: "FCFS" as TMethod,
+			type: "SPN" as TMethod,
 			quantum: 1,
 			processData: [] as Array<TNamedProcess>,
 			cpuData: [],
@@ -96,14 +96,16 @@ const scheduleMachine = createMachine(
 				states: {
 					scheduling: {
 						after: {
-							0: {
-								target: "complete",
-								cond: "isWorkEnd",
-							},
-							1000: {
-								target: "working",
-								actions: ["workProcess"],
-							},
+							1000: [
+								{
+									target: "complete",
+									cond: "isWorkEnd",
+								},
+								{
+									target: "working",
+									actions: ["workProcess"],
+								},
+							],
 						},
 					},
 					working: {
@@ -196,18 +198,222 @@ const scheduleMachine = createMachine(
 						}
 						return task;
 					});
+				} else if (context.type === "RR") {
+					context.currentTask.forEach((task, index) => {
+						if (
+							task &&
+							task.remainedTime === 0 &&
+							task.process.burstTime > 0
+						) {
+							context.queue[index].push(task.process);
+						}
+					});
+					const nextTasks = context.currentTask.map((task) => {
+						if (!task || task.remainedTime === 0) {
+							return null;
+						}
+						return task;
+					});
+					context.processData
+						.filter(
+							(process) =>
+								process.arrivalTime === context.currentTime
+						)
+						.forEach((process, index) => {
+							context.queue[index % context.queue.length].push(
+								process
+							);
+						});
+					context.currentTask = nextTasks.map((task, index) => {
+						if (task === null) {
+							const nextTask = context.queue[index].shift() as
+								| TNamedProcess
+								| undefined;
+							if (!nextTask) {
+								return null;
+							}
+
+							return {
+								remainedTime:
+									nextTask.burstTime > context.quantum
+										? context.quantum
+										: nextTask.burstTime,
+								process: nextTask,
+							};
+						}
+						return task;
+					});
+				} else if (context.type === "SPN") {
+					const nextTasks = context.currentTask.map((task) => {
+						if (!task || task.remainedTime === 0) {
+							return null;
+						}
+						return task;
+					});
+					context.processData
+						.filter(
+							(process) =>
+								process.arrivalTime === context.currentTime
+						)
+						.forEach((process, index) => {
+							const currentQueue =
+								context.queue[index % context.queue.length];
+							const processIndex = currentQueue.findIndex(
+								(queueProcess) => {
+									return (
+										queueProcess.burstTime >
+										process.burstTime
+									);
+								}
+							);
+							currentQueue.splice(
+								processIndex === -1
+									? currentQueue.length
+									: processIndex,
+								0,
+								process
+							);
+						});
+					context.currentTask = nextTasks.map((task, index) => {
+						if (task === null) {
+							const nextTask = context.queue[index].shift() as
+								| TNamedProcess
+								| undefined;
+							if (!nextTask) {
+								return null;
+							}
+
+							return {
+								remainedTime: nextTask.burstTime,
+								process: nextTask,
+							};
+						}
+						return task;
+					});
+				} else if (context.type === "SRTN") {
+					const insertQueue = (
+						process: TNamedProcess,
+						index: number
+					) => {
+						const currentQueue =
+							context.queue[index % context.queue.length];
+						const processIndex = currentQueue.findIndex(
+							(queueProcess) => {
+								return (
+									queueProcess.burstTime > process.burstTime
+								);
+							}
+						);
+						currentQueue.splice(
+							processIndex === -1
+								? currentQueue.length
+								: processIndex,
+							0,
+							process
+						);
+					};
+					const nextTasks = context.currentTask.map((task) => {
+						if (!task || task.remainedTime === 0) {
+							return null;
+						}
+						return task;
+					});
+					context.processData
+						.filter(
+							(process) =>
+								process.arrivalTime === context.currentTime
+						)
+						.forEach((process, index) =>
+							insertQueue(process, index)
+						);
+					context.currentTask = nextTasks.map((task, index) => {
+						const nextTask = context.queue[index][0] as
+							| TNamedProcess
+							| undefined;
+						if (!nextTask) {
+							return null;
+						}
+						if (task?.remainedTime ?? 0 > nextTask.burstTime) {
+							return task;
+						}
+
+						const shiftedTask = context.queue[index].shift();
+						if (task) {
+							insertQueue(task.process, index);
+						}
+						if (!shiftedTask) {
+							return null;
+						}
+
+						return {
+							remainedTime: shiftedTask.burstTime,
+							process: shiftedTask,
+						};
+					});
+				} else if (context.type === "HRRN") {
+					const nextTasks = context.currentTask.map((task) => {
+						if (!task || task.remainedTime === 0) {
+							return null;
+						}
+						return task;
+					});
+					context.processData
+						.filter(
+							(process) =>
+								process.arrivalTime === context.currentTime
+						)
+						.forEach((process, index) => {
+							context.queue[index % context.queue.length].push(
+								process
+							);
+						});
+					context.queue.forEach((value) => {
+						value.sort((a, b) => {
+							return (
+								(b.burstTime +
+									(context.currentTime - b.arrivalTime)) /
+									b.burstTime -
+								(a.burstTime +
+									(context.currentTime - a.arrivalTime)) /
+									a.burstTime
+							);
+						});
+					});
+					context.currentTask = nextTasks.map((task, index) => {
+						if (task === null) {
+							const nextTask = context.queue[index].shift() as
+								| TNamedProcess
+								| undefined;
+							if (!nextTask) {
+								return null;
+							}
+
+							return {
+								remainedTime: nextTask.burstTime,
+								process: nextTask,
+							};
+						}
+						return task;
+					});
 				}
 			},
 			workProcess: (context) => {
-				context.currentTask = context.currentTask.map((task) => {
+				context.currentTask = context.currentTask.map((task, index) => {
+					const workTime = context.cpuData[index] === "P" ? 2 : 1;
 					if (!task) {
 						return null;
 					}
 					return {
-						remainedTime: task?.remainedTime - 1,
+						remainedTime:
+							task.remainedTime - workTime >= 0
+								? task.remainedTime - workTime
+								: 0,
 						process: {
 							...task.process,
-							burstTime: task.process.burstTime - 1,
+							burstTime:
+								task.process.burstTime - workTime >= 0
+									? task.process.burstTime - workTime
+									: task.process.burstTime,
 						},
 					};
 				});
@@ -220,17 +426,20 @@ const scheduleMachine = createMachine(
 						return nextTaskHistory;
 					}
 				);
+				context.currentTime += 1;
 			},
 		},
 		guards: {
 			isWorkEnd: (context) => {
 				return !(
 					context.queue.findIndex(
-						(queuedTask) => queuedTask.length !== 0
-					) === -1 &&
+						(queuedTask) => queuedTask.length === 0
+					) === -1 ||
 					context.processData.findIndex(
 						(process) => process.arrivalTime > context.currentTime
-					) === -1
+					) !== -1 ||
+					context.currentTask.findIndex((task) => task !== null) !==
+						-1
 				);
 			},
 		},
