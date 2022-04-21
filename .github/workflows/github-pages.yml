@@ -26,6 +26,8 @@ jobs:
           ${{ runner.os }}-node-
 
     - run: npm install
+      env:
+        NODE_ENV: production
     - run: npm run build:client
 
     - name: Deploy
