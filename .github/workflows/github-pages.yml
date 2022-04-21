@@ -17,18 +17,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
     - run: npm install
+    - run: npm run build:client
       env:
         NODE_ENV: production
-    - run: npm run build:client
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
