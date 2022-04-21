@@ -11,7 +11,7 @@ export type TCurrentTask = {
 const scheduleMachine = createMachine(
 	{
 		context: {
-			type: "SPN" as TMethod,
+			type: "FCFS" as TMethod,
 			quantum: 1,
 			processData: [] as Array<TNamedProcess>,
 			cpuData: [],
@@ -123,10 +123,12 @@ const scheduleMachine = createMachine(
 				on: {
 					stop: {
 						target: "setup",
+						actions: ["initializeState"],
 					},
 				},
 				onDone: {
 					target: "setup",
+					actions: ["initializeState"],
 				},
 			},
 		},
@@ -427,6 +429,18 @@ const scheduleMachine = createMachine(
 					}
 				);
 				context.currentTime += 1;
+			},
+			initializeState: (context) => {
+				context = {
+					type: "FCFS" as TMethod,
+					quantum: 1,
+					processData: [] as Array<TNamedProcess>,
+					cpuData: [],
+					queue: [] as Array<Array<TNamedProcess>>,
+					currentTime: 0,
+					currentTask: [] as Array<TCurrentTask | null>,
+					taskHistoryArray: [] as Array<Array<number>>,
+				};
 			},
 		},
 		guards: {

@@ -19,6 +19,10 @@ export const SCHEDULE_METHOD = [
 		id: 5,
 		name: "HRRN",
 	},
+	{
+		id: 6,
+		name: "Custom",
+	},
 ] as const;
 
 export type TMethod = typeof SCHEDULE_METHOD[number]["name"];

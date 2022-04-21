@@ -111,11 +111,11 @@
 			changeGanttData(state.context.taskHistoryArray),
 			state.context.taskHistoryArray[0].length
 		);
-		// requestAnimationFrame(() => {
-		// 	requestAnimationFrame(() => {
-		// 		send({ type: "schedule" });
-		// 	});
-		// });
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				send({ type: "schedule" });
+			});
+		});
 	});
 </script>
 
@@ -124,4 +124,3 @@
 	bind:this={chart}
 	style="margin: 0 auto; width: 1000px; height: 500px;"
 />
-<button on:click={() => send({ type: "schedule" })}>schedule</button>
