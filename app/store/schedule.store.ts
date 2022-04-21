@@ -1,6 +1,7 @@
 import { createMachine, send as sendGlobal } from "xstate";
 import type { TMethod, TProcess } from "@app/types/method.interface";
 import { useMachine } from "@xstate/svelte";
+import { inspect } from "@xstate/inspect";
 
 export type TNamedProcess = TProcess & { id: number };
 
@@ -8,18 +9,24 @@ export type TCurrentTask = {
 	remainedTime: number;
 	process: TNamedProcess;
 };
+const initialContext = {
+	type: "FCFS" as TMethod,
+	quantum: 1,
+	executionTime: 1000,
+	processData: [] as Array<TNamedProcess>,
+	cpuData: [] as Array<string>,
+	queue: [] as Array<Array<TNamedProcess>>,
+	currentTime: 0,
+	currentTask: [] as Array<TCurrentTask | null>,
+	taskHistoryArray: [] as Array<Array<number>>,
+};
+
 const scheduleMachine = createMachine(
 	{
-		context: {
-			type: "FCFS" as TMethod,
-			quantum: 1,
-			processData: [] as Array<TNamedProcess>,
-			cpuData: [],
-			queue: [] as Array<Array<TNamedProcess>>,
-			currentTime: 0,
-			currentTask: [] as Array<TCurrentTask | null>,
-			taskHistoryArray: [] as Array<Array<number>>,
+		schema: {
+			context: {} as typeof initialContext,
 		},
+		context: initialContext,
 		initial: "setup",
 		states: {
 			setup: {
@@ -96,10 +103,11 @@ const scheduleMachine = createMachine(
 				states: {
 					scheduling: {
 						after: {
-							1000: [
+							EXECUTION_TIME: [
 								{
 									target: "complete",
 									cond: "isWorkEnd",
+									actions: ["initializeState"],
 								},
 								{
 									target: "working",
@@ -120,15 +128,8 @@ const scheduleMachine = createMachine(
 						type: "final",
 					},
 				},
-				on: {
-					stop: {
-						target: "setup",
-						actions: ["initializeState"],
-					},
-				},
 				onDone: {
 					target: "setup",
-					actions: ["initializeState"],
 				},
 			},
 		},
@@ -141,6 +142,11 @@ const scheduleMachine = createMachine(
 				context.quantum = !Number.isNaN(event.payload.quantum)
 					? Number(event.payload.quantum)
 					: 2;
+				context.executionTime = !Number.isNaN(
+					event.payload.executionTime
+				)
+					? Number(event.payload.executionTime)
+					: 1000;
 			},
 			sendProcess: (context, event) => {
 				context.processData = (
@@ -431,16 +437,7 @@ const scheduleMachine = createMachine(
 				context.currentTime += 1;
 			},
 			initializeState: (context) => {
-				context = {
-					type: "FCFS" as TMethod,
-					quantum: 1,
-					processData: [] as Array<TNamedProcess>,
-					cpuData: [],
-					queue: [] as Array<Array<TNamedProcess>>,
-					currentTime: 0,
-					currentTask: [] as Array<TCurrentTask | null>,
-					taskHistoryArray: [] as Array<Array<number>>,
-				};
+				context.currentTime = 0;
 			},
 		},
 		guards: {
@@ -457,7 +454,18 @@ const scheduleMachine = createMachine(
 				);
 			},
 		},
+		delays: {
+			EXECUTION_TIME: (context) => {
+				return context.executionTime;
+			},
+		},
 	}
 );
-
-export const { state, send, service } = useMachine(scheduleMachine);
+// inspect({
+// 	// options
+// 	// url: 'https://statecharts.io/inspect', // (default)
+// 	iframe: false, // open in new window
+// });
+export const { state, send, service } = useMachine(scheduleMachine, {
+	devTools: true,
+});

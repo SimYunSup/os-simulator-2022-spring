@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { state, send, service } from "@app/store/schedule.store";
+	import { send, service } from "@app/store/schedule.store";
 	import type { TCPUType } from "@app/types/method.interface";
+	import { afterUpdate } from "svelte";
 
 	let cpuData: TCPUType[] = ["P"];
 	const addCPUData = () => {
@@ -19,7 +20,6 @@
 	};
 	service.onTransition((state) => {
 		if (state.matches("setup.pending.cpu.idle")) {
-			cpuData.sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0));
 			send({
 				type: "send.cpu",
 				payload: {
@@ -27,6 +27,11 @@
 				},
 			});
 		}
+	});
+
+	afterUpdate(() => {
+		// eslint-disable-next-line no-undef
+		M.AutoInit();
 	});
 </script>
 
@@ -37,7 +42,10 @@
 				<th>CPU</th>
 				<th>Type</th>
 				<th>
-					<button on:click={addCPUData}>+</button>
+					<button
+						class="waves-effect waves-light btn btn-small blue accent-4"
+						on:click={addCPUData}>+</button
+					>
 				</th>
 			</tr>
 		</thead>
@@ -52,9 +60,13 @@
 							<option value="P">P Core</option>
 							<option value="E">E Core</option>
 						</select>
+						<label>Core Type</label>
 					</td>
 					<td>
-						<button on:click={createRemoveCPUData(index)}>
+						<button
+							class="waves-effect waves-light btn btn-small red accent-4"
+							on:click={createRemoveCPUData(index)}
+						>
 							-
 						</button>
 					</td>

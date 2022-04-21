@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import * as d3 from "d3";
 	import { send, service } from "@app/store/schedule.store";
 	import indexColor from "@app/constant/color";

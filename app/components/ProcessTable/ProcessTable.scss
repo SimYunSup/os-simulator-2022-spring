@@ -5,11 +5,7 @@
 
 	&__table {
 		margin: 0 auto;
-		& tr {
-			padding: 2px;
-		}
-		& td {
-			text-align: center;
-		}
+		height: 400px;
+		overflow-y: scroll;
 	}
 }

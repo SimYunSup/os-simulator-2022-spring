@@ -9,16 +9,19 @@
 </script>
 
 <div class="ReadyQueue">
-	{#each queue as readyQueue}
-		<div class="ReadyQueue__queue">
-			{#each readyQueue as task}
-				<div
-					class="ReadyQueue__task"
-					style="background-color: {indexColor[task.id]}"
-				>
-					P{task.id + 1}
-				</div>
-			{/each}
+	{#each queue as readyQueue, index}
+		<div class="ReadyQueue__row">
+			<span>CPU {index + 1}</span>
+			<div class="ReadyQueue__queue">
+				{#each readyQueue as task}
+					<div
+						class="ReadyQueue__task"
+						style="background-color: {indexColor[task.id]}"
+					>
+						P{task.id + 1}
+					</div>
+				{/each}
+			</div>
 		</div>
 	{/each}
 </div>

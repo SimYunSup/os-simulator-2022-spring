@@ -1255,6 +1255,13 @@
     "@typescript-eslint/types" "5.16.0"
     eslint-visitor-keys "^3.0.0"
 
+"@xstate/inspect@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@xstate/inspect/-/inspect-0.6.5.tgz#f604c2716d46b5b323169b9cdb092cb8d61b5cea"
+  integrity sha512-lUVb/XHaeOl9UP99yQK/rjS+WVx1ymaz0KX8nUsQ4VG/dxvjF0kRcAPCDMuQ7IhWbp0nER+KLE46UFXrqp20Sg==
+  dependencies:
+    fast-safe-stringify "^2.1.1"
+
 "@xstate/svelte@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@xstate/svelte/-/svelte-0.2.1.tgz#542a5c8150784ceda38d54221e109ea31f35bee4"
@@ -2860,6 +2867,11 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
+fast-safe-stringify@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
+  integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
+
 fastq@^1.6.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.13.0.tgz#616760f88a7526bdfc596b7cab8c18938c36b98c"
@@ -4255,6 +4267,11 @@ matcher@^3.0.0:
   integrity sha512-OkeDaAZ/bQCxeFAozM55PKcKU0yJMPGifLwV4Qgjitu+5MoAfSQN4lsLJeXZ1b8w0x+/Emda6MZgXS1jvsapng==
   dependencies:
     escape-string-regexp "^4.0.0"
+
+materialize-css@^1.0.0-rc.2:
+  version "1.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/materialize-css/-/materialize-css-1.0.0-rc.2.tgz#b9e6b18f698c6ef77bb6b628d59147faf131eff5"
+  integrity sha512-FuQmSyq4Qv0ov7A2qXw0E6/jbQzSWx2P1pg2/XQDYTkkSc/GyiFAxu3fw9zgShwuTvyumEiw5jkxQWT9siqMBQ==
 
 merge-stream@^2.0.0:
   version "2.0.0"

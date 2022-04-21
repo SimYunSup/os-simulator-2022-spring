@@ -1,9 +1,18 @@
 .ReadyQueue {
 	width: 100vw;
+
+	&__row {
+		display: flex;
+		justify-content: flex-start;
+		margin: 0 auto;
+		width: 1000px;
+	}
 	&__queue {
-		margin: 0 min(200px, 10%);
+		flex: 0 0 auto;
+		margin: 0 auto;
 		border: 2px solid black;
-		height: 50px;
+		width: 800px;
+		height: 54px;
 		display: flex;
 		justify-content: flex-start;
 	}

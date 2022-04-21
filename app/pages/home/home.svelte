@@ -4,6 +4,11 @@
 	import CPUTable from "@components/CPUTable/CPUTable.svelte";
 	import ReadyQueue from "@components/ReadyQueue/ReadyQueue.svelte";
 	import GanttChart from "@components/GanttChart/GanttChart.svelte";
+	import { afterUpdate, onMount } from "svelte";
+
+	onMount(() => {
+		M.AutoInit();
+	});
 </script>
 
 <Header />

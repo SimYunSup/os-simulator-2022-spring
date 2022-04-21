@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { state, send, service } from "@app/store/schedule.store";
+	import { send, service } from "@app/store/schedule.store";
 	import type { TProcess } from "@app/types/method.interface";
 	import indexColor from "@app/constant/color";
 
@@ -45,38 +45,67 @@
 </script>
 
 <article class="processtable">
-	<table class="processtable__table">
+	<table>
+		<colgroup>
+			<col width="110px" />
+			<col width="210px" />
+			<col width="210px" />
+			<col width="50px" />
+			<col width="10px" />
+		</colgroup>
 		<thead>
 			<tr>
 				<th>Process Name</th>
 				<th>Burst Time(BT)</th>
 				<th>Arrival Time(AT)</th>
 				<th>
-					<button on:click={addProcessData}>+</button>
+					<button
+						class="waves-effect waves-light btn btn-small blue accent-4"
+						on:click={addProcessData}>+</button
+					>
 				</th>
 			</tr>
 		</thead>
-		<tbody>
-			{#each processData as process, index}
-				<tr style="background-color: {indexColor[index]}">
-					<td>
-						Process {index + 1}
-					</td>
-					<td>
-						<input type="number" bind:value={process.burstTime} />
-					</td>
-					<td>
-						<input type="number" bind:value={process.arrivalTime} />
-					</td>
-					<td>
-						<button on:click={createRemoveProcessData(index)}>
-							-
-						</button>
-					</td>
-				</tr>
-			{/each}
-		</tbody>
 	</table>
+	<div class="processtable__table">
+		<table>
+			<colgroup>
+				<col width="110px" />
+				<col width="210px" />
+				<col width="210px" />
+				<col width="50px" />
+			</colgroup>
+			<tbody>
+				{#each processData as process, index}
+					<tr style="background-color: {indexColor[index]}">
+						<td>
+							Process {index + 1}
+						</td>
+						<td>
+							<input
+								type="number"
+								bind:value={process.burstTime}
+							/>
+						</td>
+						<td>
+							<input
+								type="number"
+								bind:value={process.arrivalTime}
+							/>
+						</td>
+						<td>
+							<button
+								on:click={createRemoveProcessData(index)}
+								class="waves-effect waves-light btn btn-small red accent-4"
+							>
+								-
+							</button>
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
 </article>
 
 <style lang="scss">
