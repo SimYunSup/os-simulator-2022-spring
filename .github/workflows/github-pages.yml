@@ -9,7 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      NODE_ENV: production
     strategy:
       matrix:
         node-version: [16.x]
@@ -19,8 +20,6 @@ jobs:
 
     - run: npm install
     - run: npm run build:client
-      env:
-        NODE_ENV: production
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
