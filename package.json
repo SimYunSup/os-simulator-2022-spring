@@ -27,13 +27,15 @@
 		"lint-fix": "eslint . --cache --ext .ts,.js --fix",
 		"pkg-clean": "rm -rf node_modules package-lock.json && npm install && husky install",
 		"pkg-update": "npm update",
-		"pkg-upgrade": "npx --yes npm-check-updates -u && npm install && husky install"
+		"pkg-upgrade": "npx --yes npm-check-updates -u && npm install && husky install",
+		"gh-pages": "gh-pages -d dist"
 	},
 	"dependencies": {
 		"@rollup/plugin-replace": "^4.0.0",
 		"@xstate/inspect": "^0.6.5",
 		"@xstate/svelte": "^0.2.1",
 		"d3": "^7.4.3",
+		"gh-pages": "^3.2.3",
 		"svelte-spa-router": "^3.2.0",
 		"xstate": "^4.30.6"
 	},
