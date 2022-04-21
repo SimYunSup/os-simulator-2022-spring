@@ -27,8 +27,7 @@
 		"lint-fix": "eslint . --cache --ext .ts,.js --fix",
 		"pkg-clean": "rm -rf node_modules package-lock.json && npm install && husky install",
 		"pkg-update": "npm update",
-		"pkg-upgrade": "npx --yes npm-check-updates -u && npm install && husky install",
-		"prepare": "ts-patch install -s && husky install"
+		"pkg-upgrade": "npx --yes npm-check-updates -u && npm install && husky install"
 	},
 	"dependencies": {
 		"@rollup/plugin-replace": "^4.0.0",
