@@ -2,37 +2,11 @@
 	import * as d3 from "d3";
 	import { send, service } from "@app/store/schedule.store";
 	import indexColor from "@app/constant/color";
+	import type { THistory } from "@app/helper/changeGanttData.helper";
+	import changeGanttData from "@app/helper/changeGanttData.helper";
 
 	let currentTime: number;
 	let chart: HTMLDivElement;
-
-	interface THistory {
-		id: number;
-		startTime: number;
-		endTime: number;
-	}
-	function changeGanttData(historyArray: Array<Array<number>>) {
-		return historyArray.map((history) =>
-			history.reduce((previousValue, cur, index) => {
-				if (cur === -1) {
-					return previousValue;
-				}
-				if (
-					previousValue.length !== 0 &&
-					previousValue[previousValue.length - 1].id === cur &&
-					previousValue[previousValue.length - 1].endTime === index
-				) {
-					previousValue[previousValue.length - 1].endTime++;
-					return previousValue;
-				}
-				return previousValue.concat({
-					id: cur,
-					startTime: index,
-					endTime: index + 1,
-				});
-			}, [] as Array<THistory>)
-		);
-	}
 
 	function drawGanttChart(
 		taskHistory: Array<Array<THistory>>,
