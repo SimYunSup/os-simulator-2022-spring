@@ -9787,7 +9787,7 @@ var app = (function () {
     			t = text$1(t_value);
     			option.__value = /*name*/ ctx[8];
     			option.value = option.__value;
-    			add_location(option, file$5, 24, 5, 725);
+    			add_location(option, file$5, 24, 5, 729);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -9874,29 +9874,29 @@ var app = (function () {
     			button = element("button");
     			t7 = text$1(t7_value);
     			if (/*selectedMethod*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[4].call(select));
-    			add_location(select, file$5, 22, 3, 643);
+    			add_location(select, file$5, 22, 3, 647);
     			attr_dev(div0, "class", "input-field col s6");
-    			add_location(div0, file$5, 21, 2, 607);
+    			add_location(div0, file$5, 21, 2, 611);
     			attr_dev(input0, "type", "number");
     			input0.disabled = input0_disabled_value = /*selectedMethod*/ ctx[0] !== "RR";
-    			add_location(input0, file$5, 29, 3, 834);
-    			add_location(label0, file$5, 34, 3, 932);
+    			add_location(input0, file$5, 29, 3, 838);
+    			add_location(label0, file$5, 34, 3, 936);
     			attr_dev(div1, "class", "input-field col s3");
-    			add_location(div1, file$5, 28, 2, 798);
+    			add_location(div1, file$5, 28, 2, 802);
     			attr_dev(input1, "type", "number");
-    			add_location(input1, file$5, 37, 3, 1007);
-    			add_location(label1, file$5, 38, 3, 1061);
+    			add_location(input1, file$5, 37, 3, 1011);
+    			add_location(label1, file$5, 38, 3, 1065);
     			attr_dev(div2, "class", "input-field col s3");
-    			add_location(div2, file$5, 36, 2, 971);
+    			add_location(div2, file$5, 36, 2, 975);
     			button.disabled = button_disabled_value = !/*$state*/ ctx[3].matches("setup.idle");
     			attr_dev(button, "class", "waves-effect waves-light btn btn-large");
-    			add_location(button, file$5, 41, 3, 1138);
+    			add_location(button, file$5, 41, 3, 1142);
     			attr_dev(div3, "class", "input-field col s2");
-    			add_location(div3, file$5, 40, 2, 1102);
+    			add_location(div3, file$5, 40, 2, 1106);
     			attr_dev(div4, "class", "header__content row svelte-1w1hch8");
-    			add_location(div4, file$5, 20, 1, 571);
+    			add_location(div4, file$5, 20, 1, 575);
     			attr_dev(header, "class", "header svelte-1w1hch8");
-    			add_location(header, file$5, 19, 0, 546);
+    			add_location(header, file$5, 19, 0, 550);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -10017,7 +10017,7 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Header', slots, []);
     	let selectedMethod = SCHEDULE_METHOD[0].name;
-    	let quantum;
+    	let quantum = 2;
     	let executionTime = 1000;
 
     	service.onTransition(state => {
@@ -10225,20 +10225,20 @@ var app = (function () {
     			button.textContent = "-";
     			t12 = space();
     			set_style(td0, "background-color", indexColor[/*index*/ ctx[9]]);
-    			add_location(td0, file$4, 116, 6, 3332);
+    			add_location(td0, file$4, 116, 6, 3369);
     			attr_dev(input0, "type", "number");
-    			add_location(input0, file$4, 120, 7, 3440);
-    			add_location(td1, file$4, 119, 6, 3428);
+    			add_location(input0, file$4, 120, 7, 3477);
+    			add_location(td1, file$4, 119, 6, 3465);
     			attr_dev(input1, "type", "number");
-    			add_location(input1, file$4, 126, 7, 3548);
-    			add_location(td2, file$4, 125, 6, 3536);
-    			add_location(td3, file$4, 131, 6, 3646);
-    			add_location(td4, file$4, 134, 6, 3723);
-    			add_location(td5, file$4, 137, 6, 3803);
+    			add_location(input1, file$4, 126, 7, 3585);
+    			add_location(td2, file$4, 125, 6, 3573);
+    			add_location(td3, file$4, 131, 6, 3683);
+    			add_location(td4, file$4, 134, 6, 3760);
+    			add_location(td5, file$4, 137, 6, 3840);
     			attr_dev(button, "class", "waves-effect waves-light btn btn-small red accent-4");
-    			add_location(button, file$4, 144, 7, 3993);
-    			add_location(td6, file$4, 143, 6, 3981);
-    			add_location(tr, file$4, 115, 5, 3321);
+    			add_location(button, file$4, 144, 7, 4030);
+    			add_location(td6, file$4, 143, 6, 4018);
+    			add_location(tr, file$4, 115, 5, 3358);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, tr, anchor);
@@ -10447,57 +10447,57 @@ var app = (function () {
     			}
 
     			attr_dev(col0, "width", "110px");
-    			add_location(col0, file$4, 76, 3, 2394);
+    			add_location(col0, file$4, 76, 3, 2431);
     			attr_dev(col1, "width", "210px");
-    			add_location(col1, file$4, 77, 3, 2419);
+    			add_location(col1, file$4, 77, 3, 2456);
     			attr_dev(col2, "width", "210px");
-    			add_location(col2, file$4, 78, 3, 2444);
+    			add_location(col2, file$4, 78, 3, 2481);
     			attr_dev(col3, "width", "210px");
-    			add_location(col3, file$4, 79, 3, 2469);
+    			add_location(col3, file$4, 79, 3, 2506);
     			attr_dev(col4, "width", "210px");
-    			add_location(col4, file$4, 80, 3, 2494);
+    			add_location(col4, file$4, 80, 3, 2531);
     			attr_dev(col5, "width", "210px");
-    			add_location(col5, file$4, 81, 3, 2519);
+    			add_location(col5, file$4, 81, 3, 2556);
     			attr_dev(col6, "width", "50px");
-    			add_location(col6, file$4, 82, 3, 2544);
+    			add_location(col6, file$4, 82, 3, 2581);
     			attr_dev(col7, "width", "10px");
-    			add_location(col7, file$4, 83, 3, 2568);
-    			add_location(colgroup0, file$4, 75, 2, 2380);
-    			add_location(th0, file$4, 87, 4, 2625);
-    			add_location(th1, file$4, 88, 4, 2651);
-    			add_location(th2, file$4, 89, 4, 2679);
-    			add_location(th3, file$4, 90, 4, 2709);
-    			add_location(th4, file$4, 91, 4, 2739);
-    			add_location(th5, file$4, 92, 4, 2772);
+    			add_location(col7, file$4, 83, 3, 2605);
+    			add_location(colgroup0, file$4, 75, 2, 2417);
+    			add_location(th0, file$4, 87, 4, 2662);
+    			add_location(th1, file$4, 88, 4, 2688);
+    			add_location(th2, file$4, 89, 4, 2716);
+    			add_location(th3, file$4, 90, 4, 2746);
+    			add_location(th4, file$4, 91, 4, 2776);
+    			add_location(th5, file$4, 92, 4, 2809);
     			attr_dev(button, "class", "waves-effect waves-light btn btn-small blue accent-4");
-    			add_location(button, file$4, 94, 5, 2827);
-    			add_location(th6, file$4, 93, 4, 2817);
-    			add_location(tr, file$4, 86, 3, 2616);
-    			add_location(thead, file$4, 85, 2, 2605);
+    			add_location(button, file$4, 94, 5, 2864);
+    			add_location(th6, file$4, 93, 4, 2854);
+    			add_location(tr, file$4, 86, 3, 2653);
+    			add_location(thead, file$4, 85, 2, 2642);
     			attr_dev(table0, "class", "centered");
-    			add_location(table0, file$4, 74, 1, 2353);
+    			add_location(table0, file$4, 74, 1, 2390);
     			attr_dev(col8, "width", "110px");
-    			add_location(col8, file$4, 105, 4, 3071);
+    			add_location(col8, file$4, 105, 4, 3108);
     			attr_dev(col9, "width", "210px");
-    			add_location(col9, file$4, 106, 4, 3097);
+    			add_location(col9, file$4, 106, 4, 3134);
     			attr_dev(col10, "width", "210px");
-    			add_location(col10, file$4, 107, 4, 3123);
+    			add_location(col10, file$4, 107, 4, 3160);
     			attr_dev(col11, "width", "210px");
-    			add_location(col11, file$4, 108, 4, 3149);
+    			add_location(col11, file$4, 108, 4, 3186);
     			attr_dev(col12, "width", "210px");
-    			add_location(col12, file$4, 109, 4, 3175);
+    			add_location(col12, file$4, 109, 4, 3212);
     			attr_dev(col13, "width", "210px");
-    			add_location(col13, file$4, 110, 4, 3201);
+    			add_location(col13, file$4, 110, 4, 3238);
     			attr_dev(col14, "width", "50px");
-    			add_location(col14, file$4, 111, 4, 3227);
-    			add_location(colgroup1, file$4, 104, 3, 3056);
-    			add_location(tbody, file$4, 113, 3, 3266);
+    			add_location(col14, file$4, 111, 4, 3264);
+    			add_location(colgroup1, file$4, 104, 3, 3093);
+    			add_location(tbody, file$4, 113, 3, 3303);
     			attr_dev(table1, "class", "centered");
-    			add_location(table1, file$4, 103, 2, 3028);
+    			add_location(table1, file$4, 103, 2, 3065);
     			attr_dev(div, "class", "processtable__table svelte-t5hq8b");
-    			add_location(div, file$4, 102, 1, 2992);
+    			add_location(div, file$4, 102, 1, 3029);
     			attr_dev(article, "class", "processtable svelte-t5hq8b");
-    			add_location(article, file$4, 73, 0, 2321);
+    			add_location(article, file$4, 73, 0, 2358);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -10655,7 +10655,7 @@ var app = (function () {
     		sortedTaskHistory.forEach(sortedTask => {
     			if (beforeStoredId !== sortedTask.id) {
     				beforeStoredId = sortedTask.id;
-    				beforeStoredTime = 0;
+    				beforeStoredTime = processData[sortedTask.id].arrivalTime;
     			}
 
     			processResultData[sortedTask.id].turnaroundTime = sortedTask.endTime;
