@@ -64,7 +64,7 @@
 		sortedTaskHistory.forEach((sortedTask) => {
 			if (beforeStoredId !== sortedTask.id) {
 				beforeStoredId = sortedTask.id;
-				beforeStoredTime = 0;
+				beforeStoredTime = processData[sortedTask.id].arrivalTime;
 			}
 			processResultData[sortedTask.id].turnaroundTime =
 				sortedTask.endTime;

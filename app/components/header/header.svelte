@@ -4,7 +4,7 @@
 	import { state, send, service } from "@app/store/schedule.store";
 
 	let selectedMethod: TMethod = SCHEDULE_METHOD[0].name;
-	let quantum: string;
+	let quantum = 2;
 	let executionTime = 1000;
 	service.onTransition((state) => {
 		if (state.matches("setup.pending.type.idle")) {
