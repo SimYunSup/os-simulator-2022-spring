@@ -107,7 +107,6 @@ const scheduleMachine = createMachine(
 								{
 									target: "complete",
 									cond: "isWorkEnd",
-									actions: ["initializeState"],
 								},
 								{
 									target: "working",
@@ -167,6 +166,7 @@ const scheduleMachine = createMachine(
 					{ length: event.payload.cpuData.length },
 					() => []
 				);
+				context.currentTime = 0;
 				context.currentTask = Array.from(
 					{ length: event.payload.cpuData.length },
 					() => null
@@ -421,7 +421,7 @@ const scheduleMachine = createMachine(
 							burstTime:
 								task.process.burstTime - workTime >= 0
 									? task.process.burstTime - workTime
-									: task.process.burstTime,
+									: 0,
 						},
 					};
 				});
@@ -435,9 +435,6 @@ const scheduleMachine = createMachine(
 					}
 				);
 				context.currentTime += 1;
-			},
-			initializeState: (context) => {
-				context.currentTime = 0;
 			},
 		},
 		guards: {
@@ -461,11 +458,11 @@ const scheduleMachine = createMachine(
 		},
 	}
 );
-// inspect({
-// 	// options
-// 	// url: 'https://statecharts.io/inspect', // (default)
-// 	iframe: false, // open in new window
-// });
+inspect({
+	// options
+	// url: 'https://statecharts.io/inspect', // (default)
+	iframe: false, // open in new window
+});
 export const { state, send, service } = useMachine(scheduleMachine, {
 	devTools: true,
 });
