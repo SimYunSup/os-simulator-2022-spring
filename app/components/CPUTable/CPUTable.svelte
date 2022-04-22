@@ -53,7 +53,7 @@
 			{#each cpuData as cpu, index}
 				<tr>
 					<td>
-						Process {index + 1}
+						Core {index + 1}
 					</td>
 					<td>
 						<select bind:value={cpu}>

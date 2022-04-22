@@ -25,7 +25,7 @@
 			.scaleBand()
 			// y axis 이름
 			.domain(CPUName)
-			.rangeRound([0, 400]);
+			.rangeRound([0, taskHistory.length * 100]);
 		let xAxis = d3
 			.axisBottom(x)
 			.tickValues(
@@ -39,11 +39,11 @@
 			.append("svg")
 			.attr("class", "chart")
 			.attr("width", 1000)
-			.attr("height", 500)
+			.attr("height", taskHistory.length * 100 + 100)
 			.append("g")
 			.attr("class", "gantt-chart")
 			.attr("width", 1000)
-			.attr("height", 500)
+			.attr("height", taskHistory.length * 100 + 100)
 			.attr("transform", `translate(${40}, ${0})`);
 
 		taskHistory.forEach((history, index) => {
@@ -66,7 +66,7 @@
 
 		svg.append("g")
 			.attr("class", "x axis")
-			.attr("transform", `translate(0, ${400})`)
+			.attr("transform", `translate(0, ${taskHistory.length * 100})`)
 			.transition()
 			.call(xAxis);
 		svg.append("g").attr("class", "y axis").transition().call(yAxis);

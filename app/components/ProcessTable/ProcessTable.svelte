@@ -89,7 +89,7 @@
 			});
 		}
 		if (
-			state.matches("setup") &&
+			state.matches("setup.idle") &&
 			state.context.taskHistoryArray.length !== 0
 		) {
 			processResultData = changeProcessResultData(
@@ -101,7 +101,7 @@
 </script>
 
 <article class="processtable">
-	<table>
+	<table class="centered">
 		<colgroup>
 			<col width="110px" />
 			<col width="210px" />
@@ -130,7 +130,7 @@
 		</thead>
 	</table>
 	<div class="processtable__table">
-		<table>
+		<table class="centered">
 			<colgroup>
 				<col width="110px" />
 				<col width="210px" />
@@ -142,8 +142,8 @@
 			</colgroup>
 			<tbody>
 				{#each processData as process, index}
-					<tr style="background-color: {indexColor[index]}">
-						<td>
+					<tr>
+						<td style="background-color: {indexColor[index]}">
 							Process {index + 1}
 						</td>
 						<td>
