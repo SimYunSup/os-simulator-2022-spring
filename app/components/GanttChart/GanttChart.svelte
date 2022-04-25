@@ -55,9 +55,9 @@
 				.attr("ry", 5)
 				.attr("fill", (d) => indexColor[d.id])
 				.attr("x", (d) => x(d.startTime) ?? 0)
-				.attr("y", y(CPUName[index]) ?? 0)
+				.attr("y", y(CPUName[index]) + 10 ?? 0)
 				.attr("height", function (d) {
-					return y.bandwidth();
+					return y.bandwidth() - 20;
 				})
 				.attr("width", function (d) {
 					return Math.max(1, x(d.endTime) - x(d.startTime));

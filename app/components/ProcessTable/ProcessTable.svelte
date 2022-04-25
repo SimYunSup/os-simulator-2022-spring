@@ -16,7 +16,7 @@
 			burstTime: 2,
 		},
 	];
-	let processResultData: Array<TProcessResult> = [];
+	let processResultData: Array<TProcessResult & TProcess> = [];
 	const addProcessData = () => {
 		if (processData.length >= 15) {
 			return;
@@ -41,10 +41,11 @@
 	const changeProcessResultData = (
 		processData: Array<TProcess>,
 		taskHistory: Array<Array<THistory>>
-	): Array<TProcessResult> => {
+	): Array<TProcessResult & TProcess> => {
 		let processResultData = Array.from(
 			{ length: processData.length },
-			() => ({
+			(_, index) => ({
+				...processData[index],
 				waitingTime: 0,
 				turnaroundTime: 0,
 			})
@@ -56,15 +57,13 @@
 			return a.id - b.id;
 		});
 
-		console.log(sortedTaskHistory);
-
 		let beforeStoredTime: number;
 		let beforeStoredId: number;
 
 		sortedTaskHistory.forEach((sortedTask) => {
 			if (beforeStoredId !== sortedTask.id) {
 				beforeStoredId = sortedTask.id;
-				beforeStoredTime = processData[sortedTask.id].arrivalTime;
+				beforeStoredTime = processResultData[sortedTask.id].arrivalTime;
 			}
 			processResultData[sortedTask.id].turnaroundTime =
 				sortedTask.endTime;
@@ -167,7 +166,7 @@
 						<td>
 							{processResultData[index]?.waitingTime !== undefined
 								? processResultData[index].turnaroundTime /
-								  process.burstTime
+								  processResultData[index].burstTime
 								: "?"}
 						</td>
 						<td>
