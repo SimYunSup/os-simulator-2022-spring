@@ -190,26 +190,33 @@ const scheduleMachine = createMachine(
 				});
 
 				// work stealing
-				if (context.cpuData.length > 1) {
-					const sortedCPUQueue = Array.from(context.queue);
-					const queueLength = context.cpuData.length;
-					sortedCPUQueue
-						.sort((a, b) => a.length - b.length)
-						.forEach((queueData, index) => {
-							if (
-								index === queueLength - 1 &&
-								sortedCPUQueue[queueLength - 1].length >
-									queueData.length + 1
-							) {
-								return;
-							}
-							const stolenWork =
-								sortedCPUQueue[queueLength - 1].pop();
-							if (!stolenWork) {
-								return;
-							}
-							queueData.push(stolenWork);
-						});
+				const queueRunTime = context.queue.map((queueData, index) => ({
+					runtime: queueData.reduce((prevVal, cur) => {
+						prevVal +=
+							cur.burstTime /
+							(context.cpuData[index] === "P" ? 2 : 1);
+						prevVal = Math.ceil(prevVal);
+						return prevVal;
+					}, 0),
+					id: index,
+				}));
+				queueRunTime.sort((a, b) => a.runtime - b.runtime);
+				const maxRuntimeQueueData =
+					queueRunTime[queueRunTime.length - 1];
+				const minRuntimeQueueData = queueRunTime[0];
+				const maxRuntimeQueue = context.queue[maxRuntimeQueueData.id];
+				const minRuntimeQueue = context.queue[minRuntimeQueueData.id];
+				if (
+					maxRuntimeQueue[maxRuntimeQueue.length - 1].burstTime /
+						(context.cpuData[maxRuntimeQueueData.id] === "P"
+							? 2
+							: 1) >=
+					maxRuntimeQueueData.runtime - minRuntimeQueueData.runtime
+				) {
+					const stolenData = maxRuntimeQueue.pop();
+					if (stolenData) {
+						minRuntimeQueue.push(stolenData);
+					}
 				}
 
 				// process scheduling
@@ -277,24 +284,13 @@ const scheduleMachine = createMachine(
 								process.arrivalTime === context.currentTime
 						)
 						.forEach((process, index) => {
-							const currentQueue =
-								context.queue[index % context.queue.length];
-							const processIndex = currentQueue.findIndex(
-								(queueProcess) => {
-									return (
-										queueProcess.burstTime >
-										process.burstTime
-									);
-								}
-							);
-							currentQueue.splice(
-								processIndex === -1
-									? currentQueue.length
-									: processIndex,
-								0,
+							context.queue[index % context.queue.length].push(
 								process
 							);
 						});
+					context.queue.forEach((queueData) => {
+						queueData.sort((a, b) => a.burstTime - b.burstTime);
+					});
 					context.currentTask = nextTasks.map((task, index) => {
 						if (task === null) {
 							const nextTask = context.queue[index].shift() as
@@ -312,35 +308,19 @@ const scheduleMachine = createMachine(
 						return task;
 					});
 				} else if (context.type === "SRTN") {
-					const insertQueue = (
-						process: TNamedProcess,
-						index: number
-					) => {
-						const currentQueue =
-							context.queue[index % context.queue.length];
-						const processIndex = currentQueue.findIndex(
-							(queueProcess) => {
-								return (
-									queueProcess.burstTime > process.burstTime
-								);
-							}
-						);
-						currentQueue.splice(
-							processIndex === -1
-								? currentQueue.length
-								: processIndex,
-							0,
-							process
-						);
-					};
 					context.processData
 						.filter(
 							(process) =>
 								process.arrivalTime === context.currentTime
 						)
-						.forEach((process, index) =>
-							insertQueue(process, index)
-						);
+						.forEach((process, index) => {
+							context.queue[index % context.queue.length].push(
+								process
+							);
+						});
+					context.queue.forEach((queueData) => {
+						queueData.sort((a, b) => a.burstTime - b.burstTime);
+					});
 					context.currentTask = nextTasks.map((task, index) => {
 						const nextTask = context.queue[index][0] as
 							| TNamedProcess
@@ -354,7 +334,10 @@ const scheduleMachine = createMachine(
 
 						const shiftedTask = context.queue[index].shift();
 						if (task) {
-							insertQueue(task.process, index);
+							context.queue[index].push(task.process);
+							context.queue[index].sort(
+								(a, b) => a.burstTime - b.burstTime
+							);
 						}
 						if (!shiftedTask) {
 							return null;

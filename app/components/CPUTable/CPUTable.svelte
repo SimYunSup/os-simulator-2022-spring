@@ -4,6 +4,8 @@
 	import { afterUpdate } from "svelte";
 
 	let cpuData: TCPUType[] = ["P"];
+	let definedCpuData: TCPUType[];
+	let taskHistoryArray: number[][];
 	const addCPUData = () => {
 		if (cpuData.length >= 4) {
 			return;
@@ -27,6 +29,14 @@
 				},
 			});
 		}
+		if (
+			state.matches("setup.idle") &&
+			state.context.taskHistoryArray.length !== 0
+		) {
+			taskHistoryArray = state.context.taskHistoryArray;
+			console.log(taskHistoryArray);
+			definedCpuData = Array.from(cpuData);
+		}
 	});
 
 	afterUpdate(() => {
@@ -41,6 +51,7 @@
 			<tr>
 				<th>CPU</th>
 				<th>Type</th>
+				<th>Watt</th>
 				<th>
 					<button
 						class="waves-effect waves-light btn btn-small blue accent-4"
@@ -61,6 +72,20 @@
 							<option value="E">E Core</option>
 						</select>
 						<label>Core Type</label>
+					</td>
+					<td>
+						{taskHistoryArray
+							? taskHistoryArray[index].reduce(
+									(prev, cur) =>
+										prev +
+										(cur !== -1
+											? definedCpuData[index] === "P"
+												? 3
+												: 1
+											: 0.1),
+									0
+							  )
+							: 0} W
 					</td>
 					<td>
 						<button
