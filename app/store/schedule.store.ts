@@ -173,13 +173,47 @@ const scheduleMachine = createMachine(
 				);
 			},
 			scheduleProcess: (context) => {
+				context.currentTask.forEach((task, index) => {
+					if (
+						task &&
+						task.remainedTime === 0 &&
+						task.process.burstTime > 0
+					) {
+						context.queue[index].push(task.process);
+					}
+				});
+				const nextTasks = context.currentTask.map((task) => {
+					if (!task || task.remainedTime === 0) {
+						return null;
+					}
+					return task;
+				});
+
+				// work stealing
+				if (context.cpuData.length > 1) {
+					const sortedCPUQueue = Array.from(context.queue);
+					const queueLength = context.cpuData.length;
+					sortedCPUQueue
+						.sort((a, b) => a.length - b.length)
+						.forEach((queueData, index) => {
+							if (
+								index === queueLength - 1 &&
+								sortedCPUQueue[queueLength - 1].length >
+									queueData.length + 1
+							) {
+								return;
+							}
+							const stolenWork =
+								sortedCPUQueue[queueLength - 1].pop();
+							if (!stolenWork) {
+								return;
+							}
+							queueData.push(stolenWork);
+						});
+				}
+
+				// process scheduling
 				if (context.type === "FCFS") {
-					const nextTasks = context.currentTask.map((task) => {
-						if (!task || task.remainedTime === 0) {
-							return null;
-						}
-						return task;
-					});
 					context.processData
 						.filter(
 							(process) =>
@@ -207,21 +241,6 @@ const scheduleMachine = createMachine(
 						return task;
 					});
 				} else if (context.type === "RR") {
-					context.currentTask.forEach((task, index) => {
-						if (
-							task &&
-							task.remainedTime === 0 &&
-							task.process.burstTime > 0
-						) {
-							context.queue[index].push(task.process);
-						}
-					});
-					const nextTasks = context.currentTask.map((task) => {
-						if (!task || task.remainedTime === 0) {
-							return null;
-						}
-						return task;
-					});
 					context.processData
 						.filter(
 							(process) =>
@@ -252,12 +271,6 @@ const scheduleMachine = createMachine(
 						return task;
 					});
 				} else if (context.type === "SPN") {
-					const nextTasks = context.currentTask.map((task) => {
-						if (!task || task.remainedTime === 0) {
-							return null;
-						}
-						return task;
-					});
 					context.processData
 						.filter(
 							(process) =>
@@ -320,12 +333,6 @@ const scheduleMachine = createMachine(
 							process
 						);
 					};
-					const nextTasks = context.currentTask.map((task) => {
-						if (!task || task.remainedTime === 0) {
-							return null;
-						}
-						return task;
-					});
 					context.processData
 						.filter(
 							(process) =>
@@ -359,12 +366,6 @@ const scheduleMachine = createMachine(
 						};
 					});
 				} else if (context.type === "HRRN") {
-					const nextTasks = context.currentTask.map((task) => {
-						if (!task || task.remainedTime === 0) {
-							return null;
-						}
-						return task;
-					});
 					context.processData
 						.filter(
 							(process) =>
@@ -387,6 +388,64 @@ const scheduleMachine = createMachine(
 							);
 						});
 					});
+					context.currentTask = nextTasks.map((task, index) => {
+						if (task === null) {
+							const nextTask = context.queue[index].shift() as
+								| TNamedProcess
+								| undefined;
+							if (!nextTask) {
+								return null;
+							}
+
+							return {
+								remainedTime: nextTask.burstTime,
+								process: nextTask,
+							};
+						}
+						return task;
+					});
+				} else if (context.type === "Custom") {
+					const findMinRuntimeQueue = () => {
+						let minRuntimeQueue = context.queue[0],
+							minRuntime = context.queue[0].reduce(
+								(prevVal, cur) => {
+									prevVal +=
+										cur.burstTime /
+										(context.cpuData[0] === "P" ? 2 : 1);
+									prevVal = Math.ceil(prevVal);
+									return prevVal;
+								},
+								0
+							);
+						context.queue.forEach((queueData, index) => {
+							const currentRuntime = queueData.reduce(
+								(prevVal, cur) => {
+									prevVal +=
+										cur.burstTime /
+										(context.cpuData[index] === "P"
+											? 2
+											: 1);
+									prevVal = Math.ceil(prevVal);
+									return prevVal;
+								},
+								0
+							);
+							if (currentRuntime < minRuntime) {
+								minRuntime = currentRuntime;
+								minRuntimeQueue = queueData;
+							}
+						});
+						return minRuntimeQueue;
+					};
+					context.processData
+						.filter(
+							(process) =>
+								process.arrivalTime === context.currentTime
+						)
+						.forEach((process) => {
+							const minRuntimeQueue = findMinRuntimeQueue();
+							minRuntimeQueue.push(process);
+						});
 					context.currentTask = nextTasks.map((task, index) => {
 						if (task === null) {
 							const nextTask = context.queue[index].shift() as
