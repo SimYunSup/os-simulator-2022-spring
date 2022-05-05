@@ -510,11 +510,11 @@ const scheduleMachine = createMachine(
 		},
 	}
 );
-inspect({
-	// options
-	// url: 'https://statecharts.io/inspect', // (default)
-	iframe: false, // open in new window
-});
+// inspect({
+// 	// options
+// 	// url: 'https://statecharts.io/inspect', // (default)
+// 	iframe: false, // open in new window
+// });
 export const { state, send, service } = useMachine(scheduleMachine, {
 	devTools: true,
 });
