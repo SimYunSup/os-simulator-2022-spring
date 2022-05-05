@@ -1723,18 +1723,18 @@ var app = (function () {
     PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
 
-    var __assign$2 = function() {
-        __assign$2 = Object.assign || function __assign(t) {
+    var __assign$1 = function() {
+        __assign$1 = Object.assign || function __assign(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
                 for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
             }
             return t;
         };
-        return __assign$2.apply(this, arguments);
+        return __assign$1.apply(this, arguments);
     };
 
-    function __rest$2(s, e) {
+    function __rest$1(s, e) {
         var t = {};
         for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
             t[p] = s[p];
@@ -1746,7 +1746,7 @@ var app = (function () {
         return t;
     }
 
-    function __values$1(o) {
+    function __values(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
         if (m) return m.call(o);
         if (o && typeof o.length === "number") return {
@@ -1968,7 +1968,7 @@ var app = (function () {
       var result = {};
 
       try {
-        for (var _b = __values$1(Object.keys(collection)), _c = _b.next(); !_c.done; _c = _b.next()) {
+        for (var _b = __values(Object.keys(collection)), _c = _b.next(); !_c.done; _c = _b.next()) {
           var key = _c.value;
           var item = collection[key];
 
@@ -2004,7 +2004,7 @@ var app = (function () {
         var result = object;
 
         try {
-          for (var props_1 = __values$1(props), props_1_1 = props_1.next(); !props_1_1.done; props_1_1 = props_1.next()) {
+          for (var props_1 = __values(props), props_1_1 = props_1.next(); !props_1_1.done; props_1_1 = props_1.next()) {
             var prop = props_1_1.value;
             result = result[prop];
           }
@@ -2035,7 +2035,7 @@ var app = (function () {
         var result = object;
 
         try {
-          for (var props_2 = __values$1(props), props_2_1 = props_2.next(); !props_2_1.done; props_2_1 = props_2.next()) {
+          for (var props_2 = __values(props), props_2_1 = props_2.next(); !props_2_1.done; props_2_1 = props_2.next()) {
             var prop = props_2_1.value;
             result = result[accessorProp][prop];
           }
@@ -2105,7 +2105,7 @@ var app = (function () {
       var result = {};
 
       try {
-        for (var _b = __values$1(Object.keys(mapper)), _c = _b.next(); !_c.done; _c = _b.next()) {
+        for (var _b = __values(Object.keys(mapper)), _c = _b.next(); !_c.done; _c = _b.next()) {
           var key = _c.value;
           var subMapper = mapper[key];
 
@@ -2155,7 +2155,7 @@ var app = (function () {
           falsy = _b[1];
 
       try {
-        for (var items_1 = __values$1(items), items_1_1 = items_1.next(); !items_1_1.done; items_1_1 = items_1.next()) {
+        for (var items_1 = __values(items), items_1_1 = items_1.next(); !items_1_1.done; items_1_1 = items_1.next()) {
           var item = items_1_1.value;
 
           if (predicate(item)) {
@@ -2222,7 +2222,7 @@ var app = (function () {
           partialUpdate = assignment(acc, _event.data, meta);
         } else {
           try {
-            for (var _b = __values$1(Object.keys(assignment)), _c = _b.next(); !_c.done; _c = _b.next()) {
+            for (var _b = __values(Object.keys(assignment)), _c = _b.next(); !_c.done; _c = _b.next()) {
               var key = _c.value;
               var propAssignment = assignment[key];
               partialUpdate[key] = isFunction(propAssignment) ? propAssignment(acc, _event.data, meta) : propAssignment;
@@ -2332,7 +2332,7 @@ var app = (function () {
     function toEventObject(event, payload // id?: TEvent['type']
     ) {
       if (isString(event) || typeof event === 'number') {
-        return __assign$2({
+        return __assign$1({
           type: event
         }, payload);
       }
@@ -2345,7 +2345,7 @@ var app = (function () {
       }
 
       var eventObject = toEventObject(event);
-      return __assign$2({
+      return __assign$1({
         name: eventObject.type,
         data: eventObject,
         $$type: 'scxml',
@@ -2361,7 +2361,7 @@ var app = (function () {
           };
         }
 
-        return __assign$2(__assign$2({}, transitionLike), {
+        return __assign$1(__assign$1({}, transitionLike), {
           event: event
         });
       });
@@ -2471,12 +2471,12 @@ var app = (function () {
         var exec = getActionFunction(action.type, actionFunctionMap);
 
         if (isFunction(exec)) {
-          actionObject = __assign$2(__assign$2({}, action), {
+          actionObject = __assign$1(__assign$1({}, action), {
             exec: exec
           });
         } else if (exec) {
           var actionType = exec.type || action.type;
-          actionObject = __assign$2(__assign$2(__assign$2({}, exec), action), {
+          actionObject = __assign$1(__assign$1(__assign$1({}, exec), action), {
             type: actionType
           });
         } else {
@@ -2498,7 +2498,7 @@ var app = (function () {
     };
     function toActivityDefinition(action) {
       var actionObject = toActionObject(action);
-      return __assign$2(__assign$2({
+      return __assign$1(__assign$1({
         id: isString(action) ? action : actionObject.id
       }, actionObject), {
         type: actionObject.type
@@ -2565,7 +2565,7 @@ var app = (function () {
       }
 
       var resolvedTarget = isFunction(action.to) ? action.to(ctx, _event.data, meta) : action.to;
-      return __assign$2(__assign$2({}, action), {
+      return __assign$1(__assign$1({}, action), {
         to: resolvedTarget,
         _event: resolvedEvent,
         event: resolvedEvent.data,
@@ -2580,7 +2580,7 @@ var app = (function () {
      */
 
     function sendParent$1(event, options) {
-      return send$2(event, __assign$2(__assign$2({}, options), {
+      return send$2(event, __assign$1(__assign$1({}, options), {
         to: SpecialTargets.Parent
       }));
     }
@@ -2594,7 +2594,7 @@ var app = (function () {
      */
 
     function sendTo(actor, event, options) {
-      return send$2(event, __assign$2(__assign$2({}, options), {
+      return send$2(event, __assign$1(__assign$1({}, options), {
         to: actor
       }));
     }
@@ -2613,7 +2613,7 @@ var app = (function () {
      */
 
     function respond(event, options) {
-      return send$2(event, __assign$2(__assign$2({}, options), {
+      return send$2(event, __assign$1(__assign$1({}, options), {
         to: function (_, __, _a) {
           var _event = _a._event;
           return _event.origin; // TODO: handle when _event.origin is undefined
@@ -2649,7 +2649,7 @@ var app = (function () {
       };
     }
     var resolveLog = function (action, ctx, _event) {
-      return __assign$2(__assign$2({}, action), {
+      return __assign$1(__assign$1({}, action), {
         value: isString(action.expr) ? action.expr : action.expr(ctx, _event.data, {
           _event: _event
         })
@@ -2808,7 +2808,7 @@ var app = (function () {
     function forwardTo$1(target, options) {
       return send$2(function (_, event) {
         return event;
-      }, __assign$2(__assign$2({}, options), {
+      }, __assign$1(__assign$1({}, options), {
         to: target
       }));
     }
@@ -2826,7 +2826,7 @@ var app = (function () {
           type: error$1,
           data: isFunction(errorData) ? errorData(context, event, meta) : errorData
         };
-      }, __assign$2(__assign$2({}, options), {
+      }, __assign$1(__assign$1({}, options), {
         to: SpecialTargets.Parent
       }));
     }
@@ -2926,7 +2926,7 @@ var app = (function () {
 
             if (exec_1 && preservedContexts) {
               var contextIndex_1 = preservedContexts.length - 1;
-              resolvedActionObject = __assign$2(__assign$2({}, resolvedActionObject), {
+              resolvedActionObject = __assign$1(__assign$1({}, resolvedActionObject), {
                 exec: function (_ctx) {
                   var args = [];
 
@@ -3074,7 +3074,7 @@ var app = (function () {
     function toActorRef(actorRefLike) {
       var _a;
 
-      return __assign$2((_a = {
+      return __assign$1((_a = {
         subscribe: function () {
           return {
             unsubscribe: function () {
@@ -3117,7 +3117,7 @@ var app = (function () {
 
       try {
         // add all ancestors
-        for (var configuration_1 = __values$1(configuration), configuration_1_1 = configuration_1.next(); !configuration_1_1.done; configuration_1_1 = configuration_1.next()) {
+        for (var configuration_1 = __values(configuration), configuration_1_1 = configuration_1.next(); !configuration_1_1.done; configuration_1_1 = configuration_1.next()) {
           var s = configuration_1_1.value;
           var m = s.parent;
 
@@ -3142,7 +3142,7 @@ var app = (function () {
 
       try {
         // add descendants
-        for (var configuration_2 = __values$1(configuration), configuration_2_1 = configuration_2.next(); !configuration_2_1.done; configuration_2_1 = configuration_2.next()) {
+        for (var configuration_2 = __values(configuration), configuration_2_1 = configuration_2.next(); !configuration_2_1.done; configuration_2_1 = configuration_2.next()) {
           var s = configuration_2_1.value; // if previously active, add existing child nodes
 
           if (s.type === 'compound' && (!adjList.get(s) || !adjList.get(s).length)) {
@@ -3158,7 +3158,7 @@ var app = (function () {
           } else {
             if (s.type === 'parallel') {
               try {
-                for (var _e = (e_3 = void 0, __values$1(getChildren(s))), _f = _e.next(); !_f.done; _f = _e.next()) {
+                for (var _e = (e_3 = void 0, __values(getChildren(s))), _f = _e.next(); !_f.done; _f = _e.next()) {
                   var child = _f.value;
 
                   if (child.type === 'history') {
@@ -3207,7 +3207,7 @@ var app = (function () {
 
       try {
         // add all ancestors
-        for (var configuration_3 = __values$1(configuration), configuration_3_1 = configuration_3.next(); !configuration_3_1.done; configuration_3_1 = configuration_3.next()) {
+        for (var configuration_3 = __values(configuration), configuration_3_1 = configuration_3.next(); !configuration_3_1.done; configuration_3_1 = configuration_3.next()) {
           var s = configuration_3_1.value;
           var m = s.parent;
 
@@ -3263,7 +3263,7 @@ var app = (function () {
       var adjList = new Map();
 
       try {
-        for (var configuration_4 = __values$1(configuration), configuration_4_1 = configuration_4.next(); !configuration_4_1.done; configuration_4_1 = configuration_4.next()) {
+        for (var configuration_4 = __values(configuration), configuration_4_1 = configuration_4.next(); !configuration_4_1.done; configuration_4_1 = configuration_4.next()) {
           var s = configuration_4_1.value;
 
           if (!adjList.has(s)) {
@@ -3377,7 +3377,7 @@ var app = (function () {
     function bindActionToState(action, state) {
       var exec = action.exec;
 
-      var boundAction = __assign$2(__assign$2({}, action), {
+      var boundAction = __assign$1(__assign$1({}, action), {
         exec: exec !== undefined ? function () {
           return exec(state.context, state.event, {
             action: action,
@@ -3563,9 +3563,9 @@ var app = (function () {
             _a.transitions;
             var tags = _a.tags;
             _a.machine;
-            var jsonValues = __rest$2(_a, ["configuration", "transitions", "tags", "machine"]);
+            var jsonValues = __rest$1(_a, ["configuration", "transitions", "tags", "machine"]);
 
-        return __assign$2(__assign$2({}, jsonValues), {
+        return __assign$1(__assign$1({}, jsonValues), {
           tags: Array.from(tags)
         });
       };
@@ -3605,7 +3605,7 @@ var app = (function () {
       return State;
     }();
 
-    var defaultOptions$1 = {
+    var defaultOptions = {
       deferEvents: false
     };
 
@@ -3618,7 +3618,7 @@ var app = (function () {
         this.processingEvent = false;
         this.queue = [];
         this.initialized = false;
-        this.options = __assign$2(__assign$2({}, defaultOptions$1), options);
+        this.options = __assign$1(__assign$1({}, defaultOptions), options);
       }
 
       Scheduler.prototype.initialize = function (callback) {
@@ -3918,7 +3918,7 @@ var app = (function () {
 
           if ('machine' in target) {
             // Send SCXML events to machines
-            target.send(__assign$2(__assign$2({}, event), {
+            target.send(__assign$1(__assign$1({}, event), {
               name: event.name === error$1 ? "".concat(error(_this.id)) : event.name,
               origin: _this.sessionId
             }));
@@ -3928,7 +3928,7 @@ var app = (function () {
           }
         };
 
-        var resolvedOptions = __assign$2(__assign$2({}, Interpreter.defaultOptions), options);
+        var resolvedOptions = __assign$1(__assign$1({}, Interpreter.defaultOptions), options);
 
         var clock = resolvedOptions.clock,
             logger = resolvedOptions.logger,
@@ -3984,7 +3984,7 @@ var app = (function () {
         var e_1, _a;
 
         try {
-          for (var _b = __values$1(state.actions), _c = _b.next(); !_c.done; _c = _b.next()) {
+          for (var _b = __values(state.actions), _c = _b.next(); !_c.done; _c = _b.next()) {
             var action = _c.value;
             this.exec(action, state, actionsConfig);
           }
@@ -4027,7 +4027,7 @@ var app = (function () {
 
         if (state.event) {
           try {
-            for (var _e = __values$1(this.eventListeners), _f = _e.next(); !_f.done; _f = _e.next()) {
+            for (var _e = __values(this.eventListeners), _f = _e.next(); !_f.done; _f = _e.next()) {
               var listener = _f.value;
               listener(state.event);
             }
@@ -4045,7 +4045,7 @@ var app = (function () {
         }
 
         try {
-          for (var _g = __values$1(this.listeners), _h = _g.next(); !_h.done; _h = _g.next()) {
+          for (var _g = __values(this.listeners), _h = _g.next(); !_h.done; _h = _g.next()) {
             var listener = _h.value;
             listener(state, state.event);
           }
@@ -4062,7 +4062,7 @@ var app = (function () {
         }
 
         try {
-          for (var _j = __values$1(this.contextListeners), _k = _j.next(); !_k.done; _k = _j.next()) {
+          for (var _j = __values(this.contextListeners), _k = _j.next(); !_k.done; _k = _j.next()) {
             var contextListener = _k.value;
             contextListener(this.state.context, this.state.history ? this.state.history.context : undefined);
           }
@@ -4088,7 +4088,7 @@ var app = (function () {
           var doneData = finalChildStateNode && finalChildStateNode.doneData ? mapContext(finalChildStateNode.doneData, state.context, _event) : undefined;
 
           try {
-            for (var _l = __values$1(this.doneListeners), _m = _l.next(); !_m.done; _m = _l.next()) {
+            for (var _l = __values(this.doneListeners), _m = _l.next(); !_m.done; _m = _l.next()) {
               var listener = _m.value;
               listener(doneInvoke$1(this.id, doneData));
             }
@@ -4278,7 +4278,7 @@ var app = (function () {
         var _this = this;
 
         try {
-          for (var _f = __values$1(this.listeners), _g = _f.next(); !_g.done; _g = _f.next()) {
+          for (var _f = __values(this.listeners), _g = _f.next(); !_g.done; _g = _f.next()) {
             var listener = _g.value;
             this.listeners.delete(listener);
           }
@@ -4295,7 +4295,7 @@ var app = (function () {
         }
 
         try {
-          for (var _h = __values$1(this.stopListeners), _j = _h.next(); !_j.done; _j = _h.next()) {
+          for (var _h = __values(this.stopListeners), _j = _h.next(); !_j.done; _j = _h.next()) {
             var listener = _j.value; // call listener, then remove
 
             listener();
@@ -4314,7 +4314,7 @@ var app = (function () {
         }
 
         try {
-          for (var _k = __values$1(this.contextListeners), _l = _k.next(); !_l.done; _l = _k.next()) {
+          for (var _k = __values(this.contextListeners), _l = _k.next(); !_l.done; _l = _k.next()) {
             var listener = _l.value;
             this.contextListeners.delete(listener);
           }
@@ -4331,7 +4331,7 @@ var app = (function () {
         }
 
         try {
-          for (var _m = __values$1(this.doneListeners), _o = _m.next(); !_o.done; _o = _m.next()) {
+          for (var _m = __values(this.doneListeners), _o = _m.next(); !_o.done; _o = _m.next()) {
             var listener = _o.value;
             this.doneListeners.delete(listener);
           }
@@ -4358,7 +4358,7 @@ var app = (function () {
           var e_11, _a;
 
           try {
-            for (var _b = __values$1(stateNode.definition.exit), _c = _b.next(); !_c.done; _c = _b.next()) {
+            for (var _b = __values(stateNode.definition.exit), _c = _b.next(); !_c.done; _c = _b.next()) {
               var action = _c.value;
 
               _this.exec(action, _this.state);
@@ -4385,7 +4385,7 @@ var app = (function () {
 
         try {
           // Cancel all delayed events
-          for (var _p = __values$1(Object.keys(this.delayedEventsMap)), _q = _p.next(); !_q.done; _q = _p.next()) {
+          for (var _p = __values(Object.keys(this.delayedEventsMap)), _q = _p.next(); !_q.done; _q = _p.next()) {
             var key = _q.value;
             this.clock.clearTimeout(this.delayedEventsMap[key]);
           }
@@ -4443,7 +4443,7 @@ var app = (function () {
           };
 
           try {
-            for (var events_1 = __values$1(events), events_1_1 = events_1.next(); !events_1_1.done; events_1_1 = events_1.next()) {
+            for (var events_1 = __values(events), events_1_1 = events_1.next(); !events_1_1.done; events_1_1 = events_1.next()) {
               var event_1 = events_1_1.value;
 
               _loop_1(event_1);
@@ -4506,7 +4506,7 @@ var app = (function () {
         var e_13, _a;
 
         try {
-          for (var _b = __values$1(this.forwardTo), _c = _b.next(); !_c.done; _c = _b.next()) {
+          for (var _b = __values(this.forwardTo), _c = _b.next(); !_c.done; _c = _b.next()) {
             var id = _c.value;
             var child = this.children.get(id);
 
@@ -4731,7 +4731,7 @@ var app = (function () {
         } else if (isObservable(entity)) {
           return this.spawnObservable(entity, name);
         } else if (isMachine(entity)) {
-          return this.spawnMachine(entity, __assign$2(__assign$2({}, options), {
+          return this.spawnMachine(entity, __assign$1(__assign$1({}, options), {
             id: name
           }));
         } else if (isBehavior(entity)) {
@@ -4748,12 +4748,12 @@ var app = (function () {
           options = {};
         }
 
-        var childService = new Interpreter(machine, __assign$2(__assign$2({}, this.options), {
+        var childService = new Interpreter(machine, __assign$1(__assign$1({}, this.options), {
           parent: this,
           id: options.id || machine.id
         }));
 
-        var resolvedOptions = __assign$2(__assign$2({}, DEFAULT_SPAWN_OPTIONS), options);
+        var resolvedOptions = __assign$1(__assign$1({}, DEFAULT_SPAWN_OPTIONS), options);
 
         if (resolvedOptions.sync) {
           childService.onTransition(function (state) {
@@ -5073,7 +5073,7 @@ var app = (function () {
         if (this.options.devTools && global) {
           if (global.__REDUX_DEVTOOLS_EXTENSION__) {
             var devToolsOptions = typeof this.options.devTools === 'object' ? this.options.devTools : undefined;
-            this.devTools = global.__REDUX_DEVTOOLS_EXTENSION__.connect(__assign$2(__assign$2({
+            this.devTools = global.__REDUX_DEVTOOLS_EXTENSION__.connect(__assign$1(__assign$1({
               name: this.id,
               autoPause: true,
               stateSanitizer: function (state) {
@@ -5084,7 +5084,7 @@ var app = (function () {
                 };
               }
             }, devToolsOptions), {
-              features: __assign$2({
+              features: __assign$1({
                 jump: false,
                 skip: false
               }, devToolsOptions ? devToolsOptions.features : undefined)
@@ -5142,12 +5142,12 @@ var app = (function () {
 
     var resolveSpawnOptions = function (nameOrOptions) {
       if (isString(nameOrOptions)) {
-        return __assign$2(__assign$2({}, DEFAULT_SPAWN_OPTIONS), {
+        return __assign$1(__assign$1({}, DEFAULT_SPAWN_OPTIONS), {
           name: nameOrOptions
         });
       }
 
-      return __assign$2(__assign$2(__assign$2({}, DEFAULT_SPAWN_OPTIONS), {
+      return __assign$1(__assign$1(__assign$1({}, DEFAULT_SPAWN_OPTIONS), {
         name: uniqueId()
       }), nameOrOptions);
     };
@@ -5196,15 +5196,15 @@ var app = (function () {
       return src;
     }
     function toInvokeDefinition(invokeConfig) {
-      return __assign$2(__assign$2({
+      return __assign$1(__assign$1({
         type: invoke
       }, invokeConfig), {
         toJSON: function () {
           invokeConfig.onDone;
               invokeConfig.onError;
-              var invokeDef = __rest$2(invokeConfig, ["onDone", "onError"]);
+              var invokeDef = __rest$1(invokeConfig, ["onDone", "onError"]);
 
-          return __assign$2(__assign$2({}, invokeDef), {
+          return __assign$1(__assign$1({}, invokeDef), {
             type: invoke,
             src: toInvokeSource(invokeConfig.src)
           });
@@ -5306,7 +5306,7 @@ var app = (function () {
             parent: _this,
             key: key
           });
-          Object.assign(_this.idMap, __assign$2((_a = {}, _a[stateNode.id] = stateNode, _a), stateNode.idMap));
+          Object.assign(_this.idMap, __assign$1((_a = {}, _a[stateNode.id] = stateNode, _a), stateNode.idMap));
           return stateNode;
         }) : EMPTY_OBJECT; // Document order
 
@@ -5318,7 +5318,7 @@ var app = (function () {
           stateNode.order = order++;
 
           try {
-            for (var _b = __values$1(getChildren(stateNode)), _c = _b.next(); !_c.done; _c = _b.next()) {
+            for (var _b = __values(getChildren(stateNode)), _c = _b.next(); !_c.done; _c = _b.next()) {
               var child = _c.value;
               dfs(child);
             }
@@ -5358,28 +5358,28 @@ var app = (function () {
 
           if (isMachine(invokeConfig)) {
             var invokeId = createInvokeId(_this.id, i);
-            _this.machine.options.services = __assign$2((_a = {}, _a[invokeId] = invokeConfig, _a), _this.machine.options.services);
+            _this.machine.options.services = __assign$1((_a = {}, _a[invokeId] = invokeConfig, _a), _this.machine.options.services);
             return toInvokeDefinition({
               src: invokeId,
               id: invokeId
             });
           } else if (isString(invokeConfig.src)) {
             var invokeId = invokeConfig.id || createInvokeId(_this.id, i);
-            return toInvokeDefinition(__assign$2(__assign$2({}, invokeConfig), {
+            return toInvokeDefinition(__assign$1(__assign$1({}, invokeConfig), {
               id: invokeId,
               src: invokeConfig.src
             }));
           } else if (isMachine(invokeConfig.src) || isFunction(invokeConfig.src)) {
             var invokeId = invokeConfig.id || createInvokeId(_this.id, i);
-            _this.machine.options.services = __assign$2((_b = {}, _b[invokeId] = invokeConfig.src, _b), _this.machine.options.services);
-            return toInvokeDefinition(__assign$2(__assign$2({
+            _this.machine.options.services = __assign$1((_b = {}, _b[invokeId] = invokeConfig.src, _b), _this.machine.options.services);
+            return toInvokeDefinition(__assign$1(__assign$1({
               id: invokeId
             }, invokeConfig), {
               src: invokeId
             }));
           } else {
             var invokeSource = invokeConfig.src;
-            return toInvokeDefinition(__assign$2(__assign$2({
+            return toInvokeDefinition(__assign$1(__assign$1({
               id: createInvokeId(_this.id, i)
             }, invokeConfig), {
               src: invokeSource
@@ -5422,11 +5422,11 @@ var app = (function () {
             services = _a.services,
             delays = _a.delays;
         return new StateNode(this.config, {
-          actions: __assign$2(__assign$2({}, actions), options.actions),
-          activities: __assign$2(__assign$2({}, activities), options.activities),
-          guards: __assign$2(__assign$2({}, guards), options.guards),
-          services: __assign$2(__assign$2({}, services), options.services),
-          delays: __assign$2(__assign$2({}, delays), options.delays)
+          actions: __assign$1(__assign$1({}, actions), options.actions),
+          activities: __assign$1(__assign$1({}, activities), options.activities),
+          guards: __assign$1(__assign$1({}, guards), options.guards),
+          services: __assign$1(__assign$1({}, services), options.services),
+          delays: __assign$1(__assign$1({}, delays), options.delays)
         }, context !== null && context !== void 0 ? context : this.context);
       };
       /**
@@ -5564,7 +5564,7 @@ var app = (function () {
 
         var delayedTransitions = isArray(afterConfig) ? afterConfig.map(function (transition, i) {
           var eventType = mutateEntryExit(transition.delay, i);
-          return __assign$2(__assign$2({}, transition), {
+          return __assign$1(__assign$1({}, transition), {
             event: eventType
           });
         }) : flatten$2(Object.keys(afterConfig).map(function (delay, i) {
@@ -5575,7 +5575,7 @@ var app = (function () {
           var resolvedDelay = !isNaN(+delay) ? +delay : delay;
           var eventType = mutateEntryExit(resolvedDelay, i);
           return toArray(resolvedTransition).map(function (transition) {
-            return __assign$2(__assign$2({}, transition), {
+            return __assign$1(__assign$1({}, transition), {
               event: eventType,
               delay: resolvedDelay
             });
@@ -5583,7 +5583,7 @@ var app = (function () {
         }));
         return delayedTransitions.map(function (delayedTransition) {
           var delay = delayedTransition.delay;
-          return __assign$2(__assign$2({}, _this.formatTransition(delayedTransition)), {
+          return __assign$1(__assign$1({}, _this.formatTransition(delayedTransition)), {
             delay: delay
           });
         });
@@ -5641,7 +5641,7 @@ var app = (function () {
       StateNode.prototype.resolveState = function (state) {
         var stateFromConfig = state instanceof State ? state : State.create(state);
         var configuration = Array.from(getConfiguration([], this.getStateNodes(stateFromConfig.value)));
-        return new State(__assign$2(__assign$2({}, stateFromConfig), {
+        return new State(__assign$1(__assign$1({}, stateFromConfig), {
           value: this.resolve(stateFromConfig.value),
           configuration: configuration,
           done: isInFinalState(configuration, this),
@@ -5680,7 +5680,7 @@ var app = (function () {
         var transitionMap = {};
 
         try {
-          for (var _b = __values$1(Object.keys(stateValue)), _c = _b.next(); !_c.done; _c = _b.next()) {
+          for (var _b = __values(Object.keys(stateValue)), _c = _b.next(); !_c.done; _c = _b.next()) {
             var subStateKey = _c.value;
             var subStateValue = stateValue[subStateKey];
 
@@ -5772,7 +5772,7 @@ var app = (function () {
         var selectedTransition;
 
         try {
-          for (var _b = __values$1(this.getCandidates(eventName)), _c = _b.next(); !_c.done; _c = _b.next()) {
+          for (var _b = __values(this.getCandidates(eventName)), _c = _b.next(); !_c.done; _c = _b.next()) {
             var candidate = _c.value;
             var cond = candidate.cond,
                 stateIn = candidate.in;
@@ -5890,7 +5890,7 @@ var app = (function () {
         var resolvedConfig = transition.configuration.length ? getConfiguration(prevConfig, transition.configuration) : prevConfig;
 
         try {
-          for (var resolvedConfig_1 = __values$1(resolvedConfig), resolvedConfig_1_1 = resolvedConfig_1.next(); !resolvedConfig_1_1.done; resolvedConfig_1_1 = resolvedConfig_1.next()) {
+          for (var resolvedConfig_1 = __values(resolvedConfig), resolvedConfig_1_1 = resolvedConfig_1.next(); !resolvedConfig_1_1.done; resolvedConfig_1_1 = resolvedConfig_1.next()) {
             var sn = resolvedConfig_1_1.value;
 
             if (!has(prevConfig, sn)) {
@@ -5910,7 +5910,7 @@ var app = (function () {
         }
 
         try {
-          for (var prevConfig_1 = __values$1(prevConfig), prevConfig_1_1 = prevConfig_1.next(); !prevConfig_1_1.done; prevConfig_1_1 = prevConfig_1.next()) {
+          for (var prevConfig_1 = __values(prevConfig), prevConfig_1_1 = prevConfig_1.next(); !prevConfig_1_1.done; prevConfig_1_1 = prevConfig_1.next()) {
             var sn = prevConfig_1_1.value;
 
             if (!has(resolvedConfig, sn) || has(transition.exitSet, sn.parent)) {
@@ -6062,10 +6062,10 @@ var app = (function () {
         var resolvedStateValue = willTransition ? getValue(this.machine, configuration) : undefined;
         var historyValue = currentState ? currentState.historyValue ? currentState.historyValue : stateTransition.source ? this.machine.historyValue(currentState.value) : undefined : undefined;
         var actions = this.getActions(stateTransition, context, _event, currentState);
-        var activities = currentState ? __assign$2({}, currentState.activities) : {};
+        var activities = currentState ? __assign$1({}, currentState.activities) : {};
 
         try {
-          for (var actions_1 = __values$1(actions), actions_1_1 = actions_1.next(); !actions_1_1.done; actions_1_1 = actions_1.next()) {
+          for (var actions_1 = __values(actions), actions_1_1 = actions_1.next(); !actions_1_1.done; actions_1_1 = actions_1.next()) {
             var action = actions_1_1.value;
 
             if (action.type === start$2) {
@@ -6104,7 +6104,7 @@ var app = (function () {
         var children = invokeActions.reduce(function (acc, action) {
           acc[action.activity.id] = createInvocableActor(action.activity, _this.machine, updatedContext, _event);
           return acc;
-        }, currentState ? __assign$2({}, currentState.children) : {});
+        }, currentState ? __assign$1({}, currentState.children) : {});
         var resolvedConfiguration = willTransition ? stateTransition.configuration : currentState ? currentState.configuration : [];
         var isDone = isInFinalState(resolvedConfiguration, this);
         var nextState = new State({
@@ -6558,13 +6558,13 @@ var app = (function () {
 
           if (states) {
             try {
-              for (var _c = __values$1(Object.keys(states)), _d = _c.next(); !_d.done; _d = _c.next()) {
+              for (var _c = __values(Object.keys(states)), _d = _c.next(); !_d.done; _d = _c.next()) {
                 var stateId = _d.value;
                 var state = states[stateId];
 
                 if (state.states) {
                   try {
-                    for (var _e = (e_8 = void 0, __values$1(state.events)), _f = _e.next(); !_f.done; _f = _e.next()) {
+                    for (var _e = (e_8 = void 0, __values(state.events)), _f = _e.next(); !_f.done; _f = _e.next()) {
                       var event_1 = _f.value;
                       events.add("".concat(event_1));
                     }
@@ -6663,7 +6663,7 @@ var app = (function () {
         var guards = this.machine.options.guards;
         var target = this.resolveTarget(normalizedTarget);
 
-        var transition = __assign$2(__assign$2({}, transitionConfig), {
+        var transition = __assign$1(__assign$1({}, transitionConfig), {
           actions: toActionObjects(toArray(transitionConfig.actions)),
           cond: toGuard(transitionConfig.cond, guards),
           target: target,
@@ -6671,7 +6671,7 @@ var app = (function () {
           internal: internal,
           eventType: transitionConfig.event,
           toJSON: function () {
-            return __assign$2(__assign$2({}, transition), {
+            return __assign$1(__assign$1({}, transition), {
               target: transition.target ? transition.target.map(function (t) {
                 return "#".concat(t.id);
               }) : undefined,
@@ -6699,7 +6699,7 @@ var app = (function () {
               _c = WILDCARD,
               _d = _b[_c],
               wildcardConfigs = _d === void 0 ? [] : _d,
-              strictTransitionConfigs_1 = __rest$2(_b, [typeof _c === "symbol" ? _c : _c + ""]);
+              strictTransitionConfigs_1 = __rest$1(_b, [typeof _c === "symbol" ? _c : _c + ""]);
 
           onConfig = flatten$2(Object.keys(strictTransitionConfigs_1).map(function (key) {
             if (!IS_PRODUCTION && key === NULL_EVENT) {
@@ -6744,7 +6744,7 @@ var app = (function () {
         }));
 
         try {
-          for (var delayedTransitions_1 = __values$1(delayedTransitions), delayedTransitions_1_1 = delayedTransitions_1.next(); !delayedTransitions_1_1.done; delayedTransitions_1_1 = delayedTransitions_1.next()) {
+          for (var delayedTransitions_1 = __values(delayedTransitions), delayedTransitions_1_1 = delayedTransitions_1.next(); !delayedTransitions_1_1.done; delayedTransitions_1_1 = delayedTransitions_1.next()) {
             var delayedTransition = delayedTransitions_1_1.value;
             formattedTransitions.push(delayedTransition);
           }
@@ -6783,7 +6783,7 @@ var app = (function () {
       var foundStateId;
 
       try {
-        for (var _b = __values$1(Object.keys(stateMap)), _c = _b.next(); !_c.done; _c = _b.next()) {
+        for (var _b = __values(Object.keys(stateMap)), _c = _b.next(); !_c.done; _c = _b.next()) {
           var mappedStateId = _c.value;
 
           if (matchesState(mappedStateId, stateId) && (!foundStateId || stateId.length > foundStateId.length)) {
@@ -6811,7 +6811,7 @@ var app = (function () {
       var resolvedState = State.from(state, state instanceof State ? state.context : undefined);
 
       try {
-        for (var patterns_1 = __values$1(patterns), patterns_1_1 = patterns_1.next(); !patterns_1_1.done; patterns_1_1 = patterns_1.next()) {
+        for (var patterns_1 = __values(patterns), patterns_1_1 = patterns_1.next(); !patterns_1_1.done; patterns_1_1 = patterns_1.next()) {
           var _b = __read(patterns_1_1.value, 2),
               stateValue = _b[0],
               getValue = _b[1];
@@ -9317,8 +9317,8 @@ var app = (function () {
 
     var require$$1 = /*@__PURE__*/getAugmentedNamespace(es);
 
-    var __assign$1 = (commonjsGlobal && commonjsGlobal.__assign) || function () {
-        __assign$1 = Object.assign || function(t) {
+    var __assign = (commonjsGlobal && commonjsGlobal.__assign) || function () {
+        __assign = Object.assign || function(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
                 for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
@@ -9326,9 +9326,9 @@ var app = (function () {
             }
             return t;
         };
-        return __assign$1.apply(this, arguments);
+        return __assign.apply(this, arguments);
     };
-    var __rest$1 = (commonjsGlobal && commonjsGlobal.__rest) || function (s, e) {
+    var __rest = (commonjsGlobal && commonjsGlobal.__rest) || function (s, e) {
         var t = {};
         for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
             t[p] = s[p];
@@ -9345,7 +9345,7 @@ var app = (function () {
     var xstate_1 = require$$1;
     function useMachine(machine, options) {
         if (options === void 0) { options = {}; }
-        var context = options.context, guards = options.guards, actions = options.actions, activities = options.activities, services = options.services, delays = options.delays, rehydratedState = options.state, interpreterOptions = __rest$1(options, ["context", "guards", "actions", "activities", "services", "delays", "state"]);
+        var context = options.context, guards = options.guards, actions = options.actions, activities = options.activities, services = options.services, delays = options.delays, rehydratedState = options.state, interpreterOptions = __rest(options, ["context", "guards", "actions", "activities", "services", "delays", "state"]);
         var machineConfig = {
             context: context,
             guards: guards,
@@ -9354,7 +9354,7 @@ var app = (function () {
             services: services,
             delays: delays
         };
-        var resolvedMachine = machine.withConfig(machineConfig, function () { return (__assign$1(__assign$1({}, machine.context), context)); });
+        var resolvedMachine = machine.withConfig(machineConfig, function () { return (__assign(__assign({}, machine.context), context)); });
         var service = (0, xstate_1.interpret)(resolvedMachine, interpreterOptions).start(rehydratedState ? new xstate_1.State(rehydratedState) : undefined);
         var state = (0, store_1$1.readable)(service.state, function (set) {
             service.subscribe(function (state) {
@@ -9402,571 +9402,6 @@ var app = (function () {
     var useSelector_1 = useSelector$1;
     Object.defineProperty(exports, "useSelector", { enumerable: true, get: function () { return useSelector_1.useSelector; } });
     }(lib));
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation.
-
-    Permission to use, copy, modify, and/or distribute this software for any
-    purpose with or without fee is hereby granted.
-
-    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-    PERFORMANCE OF THIS SOFTWARE.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    function __rest(s, e) {
-        var t = {};
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-            t[p] = s[p];
-        if (s != null && typeof Object.getOwnPropertySymbols === "function")
-            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                    t[p[i]] = s[p[i]];
-            }
-        return t;
-    }
-
-    function __values(o) {
-        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-        if (m) return m.call(o);
-        if (o && typeof o.length === "number") return {
-            next: function () {
-                if (o && i >= o.length) o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-    }
-
-    var fastSafeStringify = stringify$1;
-    stringify$1.default = stringify$1;
-    stringify$1.stable = deterministicStringify;
-    stringify$1.stableStringify = deterministicStringify;
-
-    var LIMIT_REPLACE_NODE = '[...]';
-    var CIRCULAR_REPLACE_NODE = '[Circular]';
-
-    var arr = [];
-    var replacerStack = [];
-
-    function defaultOptions () {
-      return {
-        depthLimit: Number.MAX_SAFE_INTEGER,
-        edgesLimit: Number.MAX_SAFE_INTEGER
-      }
-    }
-
-    // Regular stringify
-    function stringify$1 (obj, replacer, spacer, options) {
-      if (typeof options === 'undefined') {
-        options = defaultOptions();
-      }
-
-      decirc(obj, '', 0, [], undefined, 0, options);
-      var res;
-      try {
-        if (replacerStack.length === 0) {
-          res = JSON.stringify(obj, replacer, spacer);
-        } else {
-          res = JSON.stringify(obj, replaceGetterValues(replacer), spacer);
-        }
-      } catch (_) {
-        return JSON.stringify('[unable to serialize, circular reference is too complex to analyze]')
-      } finally {
-        while (arr.length !== 0) {
-          var part = arr.pop();
-          if (part.length === 4) {
-            Object.defineProperty(part[0], part[1], part[3]);
-          } else {
-            part[0][part[1]] = part[2];
-          }
-        }
-      }
-      return res
-    }
-
-    function setReplace (replace, val, k, parent) {
-      var propertyDescriptor = Object.getOwnPropertyDescriptor(parent, k);
-      if (propertyDescriptor.get !== undefined) {
-        if (propertyDescriptor.configurable) {
-          Object.defineProperty(parent, k, { value: replace });
-          arr.push([parent, k, val, propertyDescriptor]);
-        } else {
-          replacerStack.push([val, k, replace]);
-        }
-      } else {
-        parent[k] = replace;
-        arr.push([parent, k, val]);
-      }
-    }
-
-    function decirc (val, k, edgeIndex, stack, parent, depth, options) {
-      depth += 1;
-      var i;
-      if (typeof val === 'object' && val !== null) {
-        for (i = 0; i < stack.length; i++) {
-          if (stack[i] === val) {
-            setReplace(CIRCULAR_REPLACE_NODE, val, k, parent);
-            return
-          }
-        }
-
-        if (
-          typeof options.depthLimit !== 'undefined' &&
-          depth > options.depthLimit
-        ) {
-          setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-          return
-        }
-
-        if (
-          typeof options.edgesLimit !== 'undefined' &&
-          edgeIndex + 1 > options.edgesLimit
-        ) {
-          setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-          return
-        }
-
-        stack.push(val);
-        // Optimize for Arrays. Big arrays could kill the performance otherwise!
-        if (Array.isArray(val)) {
-          for (i = 0; i < val.length; i++) {
-            decirc(val[i], i, i, stack, val, depth, options);
-          }
-        } else {
-          var keys = Object.keys(val);
-          for (i = 0; i < keys.length; i++) {
-            var key = keys[i];
-            decirc(val[key], key, i, stack, val, depth, options);
-          }
-        }
-        stack.pop();
-      }
-    }
-
-    // Stable-stringify
-    function compareFunction (a, b) {
-      if (a < b) {
-        return -1
-      }
-      if (a > b) {
-        return 1
-      }
-      return 0
-    }
-
-    function deterministicStringify (obj, replacer, spacer, options) {
-      if (typeof options === 'undefined') {
-        options = defaultOptions();
-      }
-
-      var tmp = deterministicDecirc(obj, '', 0, [], undefined, 0, options) || obj;
-      var res;
-      try {
-        if (replacerStack.length === 0) {
-          res = JSON.stringify(tmp, replacer, spacer);
-        } else {
-          res = JSON.stringify(tmp, replaceGetterValues(replacer), spacer);
-        }
-      } catch (_) {
-        return JSON.stringify('[unable to serialize, circular reference is too complex to analyze]')
-      } finally {
-        // Ensure that we restore the object as it was.
-        while (arr.length !== 0) {
-          var part = arr.pop();
-          if (part.length === 4) {
-            Object.defineProperty(part[0], part[1], part[3]);
-          } else {
-            part[0][part[1]] = part[2];
-          }
-        }
-      }
-      return res
-    }
-
-    function deterministicDecirc (val, k, edgeIndex, stack, parent, depth, options) {
-      depth += 1;
-      var i;
-      if (typeof val === 'object' && val !== null) {
-        for (i = 0; i < stack.length; i++) {
-          if (stack[i] === val) {
-            setReplace(CIRCULAR_REPLACE_NODE, val, k, parent);
-            return
-          }
-        }
-        try {
-          if (typeof val.toJSON === 'function') {
-            return
-          }
-        } catch (_) {
-          return
-        }
-
-        if (
-          typeof options.depthLimit !== 'undefined' &&
-          depth > options.depthLimit
-        ) {
-          setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-          return
-        }
-
-        if (
-          typeof options.edgesLimit !== 'undefined' &&
-          edgeIndex + 1 > options.edgesLimit
-        ) {
-          setReplace(LIMIT_REPLACE_NODE, val, k, parent);
-          return
-        }
-
-        stack.push(val);
-        // Optimize for Arrays. Big arrays could kill the performance otherwise!
-        if (Array.isArray(val)) {
-          for (i = 0; i < val.length; i++) {
-            deterministicDecirc(val[i], i, i, stack, val, depth, options);
-          }
-        } else {
-          // Create a temporary object in the required way
-          var tmp = {};
-          var keys = Object.keys(val).sort(compareFunction);
-          for (i = 0; i < keys.length; i++) {
-            var key = keys[i];
-            deterministicDecirc(val[key], key, i, stack, val, depth, options);
-            tmp[key] = val[key];
-          }
-          if (typeof parent !== 'undefined') {
-            arr.push([parent, k, val]);
-            parent[k] = tmp;
-          } else {
-            return tmp
-          }
-        }
-        stack.pop();
-      }
-    }
-
-    // wraps replacer function to handle values we couldn't replace
-    // and mark them as replaced value
-    function replaceGetterValues (replacer) {
-      replacer =
-        typeof replacer !== 'undefined'
-          ? replacer
-          : function (k, v) {
-            return v
-          };
-      return function (key, val) {
-        if (replacerStack.length > 0) {
-          for (var i = 0; i < replacerStack.length; i++) {
-            var part = replacerStack[i];
-            if (part[1] === key && part[0] === val) {
-              val = part[2];
-              replacerStack.splice(i, 1);
-              break
-            }
-          }
-        }
-        return replacer.call(this, key, val)
-      }
-    }
-
-    var safeStringify = fastSafeStringify;
-
-    function getLazy(value) {
-        return typeof value === 'function' ? value() : value;
-    }
-    function stringify(value, replacer) {
-        try {
-            return JSON.stringify(value, replacer);
-        }
-        catch (e) {
-            return safeStringify(value, replacer);
-        }
-    }
-
-    function selectivelyStringify(value, keys, replacer) {
-        var e_1, _a;
-        var selected = {};
-        try {
-            for (var keys_1 = __values(keys), keys_1_1 = keys_1.next(); !keys_1_1.done; keys_1_1 = keys_1.next()) {
-                var key = keys_1_1.value;
-                selected[key] = value[key];
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (keys_1_1 && !keys_1_1.done && (_a = keys_1.return)) _a.call(keys_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        var serialized = JSON.parse(stringify(selected, replacer));
-        return stringify(__assign(__assign({}, value), serialized));
-    }
-    function stringifyState(state, replacer) {
-        state.machine; state.configuration; state.history; var stateToStringify = __rest(state, ["machine", "configuration", "history"]);
-        return selectivelyStringify(stateToStringify, ['context', 'event', '_event'], replacer);
-    }
-    function stringifyMachine(machine, replacer) {
-        return selectivelyStringify(machine.definition, ['context'], replacer);
-    }
-
-    function createInspectMachine(devTools, options) {
-        if (devTools === void 0) { devTools = globalThis.__xstate__; }
-        var serviceMap = new Map();
-        // Listen for services being registered and index them
-        // by their sessionId for quicker lookup
-        var sub = devTools.onRegister(function (service) {
-            serviceMap.set(service.sessionId, service);
-        });
-        return createMachine({
-            initial: 'pendingConnection',
-            context: {
-                client: undefined
-            },
-            states: {
-                pendingConnection: {},
-                connected: {
-                    on: {
-                        'service.state': {
-                            actions: function (ctx, e) { return ctx.client.send(e); }
-                        },
-                        'service.event': {
-                            actions: function (ctx, e) { return ctx.client.send(e); }
-                        },
-                        'service.register': {
-                            actions: function (ctx, e) { return ctx.client.send(e); }
-                        },
-                        'service.stop': {
-                            actions: function (ctx, e) { return ctx.client.send(e); }
-                        },
-                        'xstate.event': {
-                            actions: function (_, e) {
-                                var event = e.event;
-                                var scxmlEventObject = JSON.parse(event);
-                                var service = serviceMap.get(scxmlEventObject.origin);
-                                service === null || service === void 0 ? void 0 : service.send(scxmlEventObject);
-                            }
-                        },
-                        unload: {
-                            actions: function (ctx) {
-                                ctx.client.send({ type: 'xstate.disconnect' });
-                            }
-                        },
-                        disconnect: 'disconnected'
-                    }
-                },
-                disconnected: {
-                    entry: function () {
-                        sub.unsubscribe();
-                    },
-                    type: 'final'
-                }
-            },
-            on: {
-                'xstate.inspecting': {
-                    target: '.connected',
-                    actions: [
-                        assign({
-                            client: function (_, e) { return e.client; }
-                        }),
-                        function (ctx) {
-                            devTools.services.forEach(function (service) {
-                                var _a;
-                                (_a = ctx.client) === null || _a === void 0 ? void 0 : _a.send({
-                                    type: 'service.register',
-                                    machine: stringifyMachine(service.machine, options === null || options === void 0 ? void 0 : options.serialize),
-                                    state: stringifyState(service.state || service.initialState, options === null || options === void 0 ? void 0 : options.serialize),
-                                    sessionId: service.sessionId
-                                });
-                            });
-                        }
-                    ]
-                }
-            }
-        });
-    }
-
-    var serviceMap = new Map();
-    function createDevTools() {
-        var services = new Set();
-        var serviceListeners = new Set();
-        return {
-            services: services,
-            register: function (service) {
-                services.add(service);
-                serviceMap.set(service.sessionId, service);
-                serviceListeners.forEach(function (listener) { return listener(service); });
-                service.onStop(function () {
-                    services.delete(service);
-                    serviceMap.delete(service.sessionId);
-                });
-            },
-            unregister: function (service) {
-                services.delete(service);
-                serviceMap.delete(service.sessionId);
-            },
-            onRegister: function (listener) {
-                serviceListeners.add(listener);
-                services.forEach(function (service) { return listener(service); });
-                return {
-                    unsubscribe: function () {
-                        serviceListeners.delete(listener);
-                    }
-                };
-            }
-        };
-    }
-    var defaultInspectorOptions = {
-        url: 'https://statecharts.io/inspect',
-        iframe: function () {
-            return document.querySelector('iframe[data-xstate]');
-        },
-        devTools: function () {
-            var devTools = createDevTools();
-            globalThis.__xstate__ = devTools;
-            return devTools;
-        },
-        serialize: undefined
-    };
-    var getFinalOptions = function (options) {
-        var withDefaults = __assign(__assign({}, defaultInspectorOptions), options);
-        return __assign(__assign({}, withDefaults), { url: new URL(withDefaults.url), iframe: getLazy(withDefaults.iframe), devTools: getLazy(withDefaults.devTools) });
-    };
-    var patchedInterpreters = new Set();
-    function inspect(options) {
-        var _a = getFinalOptions(options), iframe = _a.iframe, url = _a.url, devTools = _a.devTools;
-        if (iframe === null) {
-            console.warn('No suitable <iframe> found to embed the inspector. Please pass an <iframe> element to `inspect(iframe)` or create an <iframe data-xstate></iframe> element.');
-            return undefined;
-        }
-        var inspectMachine = createInspectMachine(devTools, options);
-        var inspectService = interpret(inspectMachine).start();
-        var listeners = new Set();
-        var sub = inspectService.subscribe(function (state) {
-            listeners.forEach(function (listener) { return listener.next(state); });
-        });
-        var targetWindow;
-        var client;
-        var messageHandler = function (event) {
-            if (typeof event.data === 'object' &&
-                event.data !== null &&
-                'type' in event.data) {
-                if (iframe && !targetWindow) {
-                    targetWindow = iframe.contentWindow;
-                }
-                if (!client) {
-                    client = {
-                        send: function (e) {
-                            targetWindow.postMessage(e, url.origin);
-                        }
-                    };
-                }
-                var inspectEvent = __assign(__assign({}, event.data), { client: client });
-                inspectService.send(inspectEvent);
-            }
-        };
-        window.addEventListener('message', messageHandler);
-        window.addEventListener('unload', function () {
-            inspectService.send({ type: 'unload' });
-        });
-        var stringifyWithSerializer = function (value) {
-            return stringify(value, options === null || options === void 0 ? void 0 : options.serialize);
-        };
-        devTools.onRegister(function (service) {
-            var _a;
-            var state = service.state || service.initialState;
-            inspectService.send({
-                type: 'service.register',
-                machine: stringifyMachine(service.machine, options === null || options === void 0 ? void 0 : options.serialize),
-                state: stringifyState(state, options === null || options === void 0 ? void 0 : options.serialize),
-                sessionId: service.sessionId,
-                id: service.id,
-                parent: (_a = service.parent) === null || _a === void 0 ? void 0 : _a.sessionId
-            });
-            inspectService.send({
-                type: 'service.event',
-                event: stringifyWithSerializer(state._event),
-                sessionId: service.sessionId
-            });
-            if (!patchedInterpreters.has(service)) {
-                patchedInterpreters.add(service);
-                // monkey-patch service.send so that we know when an event was sent
-                // to a service *before* it is processed, since other events might occur
-                // while the sent one is being processed, which throws the order off
-                var originalSend_1 = service.send.bind(service);
-                service.send = function inspectSend(event, payload) {
-                    inspectService.send({
-                        type: 'service.event',
-                        event: stringifyWithSerializer(toSCXMLEvent(toEventObject(event, payload))),
-                        sessionId: service.sessionId
-                    });
-                    return originalSend_1(event, payload);
-                };
-            }
-            service.subscribe(function (state) {
-                // filter out synchronous notification from within `.start()` call
-                // when the `service.state` has not yet been assigned
-                if (state === undefined) {
-                    return;
-                }
-                inspectService.send({
-                    type: 'service.state',
-                    // TODO: investigate usage of structuredClone in browsers if available
-                    state: stringifyState(state, options === null || options === void 0 ? void 0 : options.serialize),
-                    sessionId: service.sessionId
-                });
-            });
-            service.onStop(function () {
-                inspectService.send({
-                    type: 'service.stop',
-                    sessionId: service.sessionId
-                });
-            });
-        });
-        if (iframe) {
-            iframe.addEventListener('load', function () {
-                targetWindow = iframe.contentWindow;
-            });
-            iframe.setAttribute('src', String(url));
-        }
-        else {
-            targetWindow = window.open(String(url), 'xstateinspector');
-        }
-        return {
-            send: function (event) {
-                inspectService.send(event);
-            },
-            subscribe: function (next, onError, onComplete) {
-                var observer = toObserver(next, onError, onComplete);
-                listeners.add(observer);
-                observer.next(inspectService.state);
-                return {
-                    unsubscribe: function () {
-                        listeners.delete(observer);
-                    }
-                };
-            },
-            disconnect: function () {
-                inspectService.send('disconnect');
-                window.removeEventListener('message', messageHandler);
-                sub.unsubscribe();
-            }
-        };
-    }
 
     const initialContext = {
         type: "FCFS",
@@ -10366,11 +9801,11 @@ var app = (function () {
             },
         },
     });
-    inspect({
-        // options
-        // url: 'https://statecharts.io/inspect', // (default)
-        iframe: false, // open in new window
-    });
+    // inspect({
+    // 	// options
+    // 	// url: 'https://statecharts.io/inspect', // (default)
+    // 	iframe: false, // open in new window
+    // });
     const { state, send, service } = lib.useMachine(scheduleMachine, {
         devTools: true,
     });
