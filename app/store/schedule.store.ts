@@ -190,32 +190,42 @@ const scheduleMachine = createMachine(
 				});
 
 				// work stealing
-				const queueRunTime = context.queue.map((queueData, index) => ({
-					runtime: queueData.reduce((prevVal, cur) => {
-						prevVal +=
-							cur.burstTime /
-							(context.cpuData[index] === "P" ? 2 : 1);
-						prevVal = Math.ceil(prevVal);
-						return prevVal;
-					}, 0),
-					id: index,
-				}));
-				queueRunTime.sort((a, b) => a.runtime - b.runtime);
-				const maxRuntimeQueueData =
-					queueRunTime[queueRunTime.length - 1];
-				const minRuntimeQueueData = queueRunTime[0];
-				const maxRuntimeQueue = context.queue[maxRuntimeQueueData.id];
-				const minRuntimeQueue = context.queue[minRuntimeQueueData.id];
-				if (
-					maxRuntimeQueue[maxRuntimeQueue.length - 1].burstTime /
-						(context.cpuData[maxRuntimeQueueData.id] === "P"
-							? 2
-							: 1) >=
-					maxRuntimeQueueData.runtime - minRuntimeQueueData.runtime
-				) {
-					const stolenData = maxRuntimeQueue.pop();
-					if (stolenData) {
-						minRuntimeQueue.push(stolenData);
+				if (context.queue.flat(2).length !== 0) {
+					const queueRunTime = context.queue.map(
+						(queueData, index) => ({
+							runtime: queueData.reduce((prevVal, cur) => {
+								prevVal +=
+									cur.burstTime /
+									(context.cpuData[index] === "P" ? 2 : 1);
+								prevVal = Math.ceil(prevVal);
+								return prevVal;
+							}, 0),
+							id: index,
+						})
+					);
+					queueRunTime.sort((a, b) => a.runtime - b.runtime);
+					const maxRuntimeQueueData =
+						queueRunTime[queueRunTime.length - 1];
+					const minRuntimeQueueData = queueRunTime[0];
+					const maxRuntimeQueue =
+						context.queue[maxRuntimeQueueData.id];
+					const minRuntimeQueue =
+						context.queue[minRuntimeQueueData.id];
+					if (
+						Math.ceil(
+							maxRuntimeQueue[maxRuntimeQueue.length - 1]
+								.burstTime /
+								(context.cpuData[maxRuntimeQueueData.id] === "P"
+									? 2
+									: 1)
+						) <
+						maxRuntimeQueueData.runtime -
+							minRuntimeQueueData.runtime
+					) {
+						const stolenData = maxRuntimeQueue.pop();
+						if (stolenData) {
+							minRuntimeQueue.push(stolenData);
+						}
 					}
 				}
 
