@@ -158,15 +158,21 @@
 							/>
 						</td>
 						<td>
-							{processResultData[index]?.waitingTime ?? "?"}
+							{processResultData[index]?.waitingTime.toFixed(2) ??
+								"?"}
 						</td>
 						<td>
-							{processResultData[index]?.turnaroundTime ?? "?"}
+							{processResultData[index]?.turnaroundTime.toFixed(
+								2
+							) ?? "?"}
 						</td>
 						<td>
 							{processResultData[index]?.waitingTime !== undefined
-								? processResultData[index].turnaroundTime /
-								  processResultData[index].burstTime
+								? (
+										processResultData[index]
+											.turnaroundTime /
+										processResultData[index].burstTime
+								  ).toFixed(2)
 								: "?"}
 						</td>
 						<td>

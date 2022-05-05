@@ -335,22 +335,22 @@ const scheduleMachine = createMachine(
 						const nextTask = context.queue[index][0] as
 							| TNamedProcess
 							| undefined;
-						if (!nextTask) {
-							return null;
-						}
-						if (task?.remainedTime ?? 0 > nextTask.burstTime) {
+						if (
+							!nextTask ||
+							(task?.remainedTime ?? 0 > nextTask.burstTime)
+						) {
 							return task;
 						}
 
 						const shiftedTask = context.queue[index].shift();
+						if (!shiftedTask) {
+							return task;
+						}
 						if (task) {
 							context.queue[index].push(task.process);
 							context.queue[index].sort(
 								(a, b) => a.burstTime - b.burstTime
 							);
-						}
-						if (!shiftedTask) {
-							return null;
 						}
 
 						return {
@@ -510,11 +510,11 @@ const scheduleMachine = createMachine(
 		},
 	}
 );
-// inspect({
-// 	// options
-// 	// url: 'https://statecharts.io/inspect', // (default)
-// 	iframe: false, // open in new window
-// });
+inspect({
+	// options
+	// url: 'https://statecharts.io/inspect', // (default)
+	iframe: false, // open in new window
+});
 export const { state, send, service } = useMachine(scheduleMachine, {
 	devTools: true,
 });

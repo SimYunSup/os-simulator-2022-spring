@@ -34,7 +34,6 @@
 			state.context.taskHistoryArray.length !== 0
 		) {
 			taskHistoryArray = state.context.taskHistoryArray;
-			console.log(taskHistoryArray);
 			definedCpuData = Array.from(cpuData);
 		}
 	});
@@ -75,16 +74,18 @@
 					</td>
 					<td>
 						{taskHistoryArray
-							? taskHistoryArray[index].reduce(
-									(prev, cur) =>
-										prev +
-										(cur !== -1
-											? definedCpuData[index] === "P"
-												? 3
-												: 1
-											: 0.1),
-									0
-							  )
+							? taskHistoryArray[index]
+									.reduce(
+										(prev, cur) =>
+											prev +
+											(cur !== -1
+												? definedCpuData[index] === "P"
+													? 3
+													: 1
+												: 0.1),
+										0
+									)
+									.toFixed(2)
 							: 0} W
 					</td>
 					<td>
