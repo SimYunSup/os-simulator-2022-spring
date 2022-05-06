@@ -1,4 +1,4 @@
-import { createMachine, send as sendGlobal } from "xstate";
+import { createMachine } from "xstate";
 import type { TMethod, TProcess } from "@app/types/method.interface";
 import { useMachine } from "@xstate/svelte";
 import { inspect } from "@xstate/inspect";
@@ -191,6 +191,7 @@ const scheduleMachine = createMachine(
 
 				// work stealing
 				if (context.queue.flat(2).length !== 0) {
+					// queue의 실행시간 계산 및 {runtime: 실행시간, id: index} 객체로 변경
 					const queueRunTime = context.queue.map(
 						(queueData, index) => ({
 							runtime: queueData.reduce((prevVal, cur) => {
@@ -203,6 +204,7 @@ const scheduleMachine = createMachine(
 							id: index,
 						})
 					);
+					// 객체 runtime을 기준으로 오름차순 정렬
 					queueRunTime.sort((a, b) => a.runtime - b.runtime);
 					const maxRuntimeQueueData =
 						queueRunTime[queueRunTime.length - 1];
@@ -211,11 +213,12 @@ const scheduleMachine = createMachine(
 						context.queue[maxRuntimeQueueData.id];
 					const minRuntimeQueue =
 						context.queue[minRuntimeQueueData.id];
+					// maxRuntime의 맨 마지막 process가 minRuntime에 들어갈 경우 더 빨리 끝나면 옮긴다.
 					if (
 						Math.ceil(
 							maxRuntimeQueue[maxRuntimeQueue.length - 1]
 								.burstTime /
-								(context.cpuData[maxRuntimeQueueData.id] === "P"
+								(context.cpuData[minRuntimeQueueData.id] === "P"
 									? 2
 									: 1)
 						) <
@@ -398,6 +401,7 @@ const scheduleMachine = createMachine(
 						return task;
 					});
 				} else if (context.type === "Custom") {
+					// queue마다 runtime 계산 후 runtime이 가장 작은 queue 반환
 					const findMinRuntimeQueue = () => {
 						let minRuntimeQueue = context.queue[0],
 							minRuntime = context.queue[0].reduce(
@@ -430,6 +434,7 @@ const scheduleMachine = createMachine(
 						});
 						return minRuntimeQueue;
 					};
+					// 현재 들어가야 하는 process를 runtime이 가장 작은 queue에 넣음
 					context.processData
 						.filter(
 							(process) =>
@@ -439,6 +444,7 @@ const scheduleMachine = createMachine(
 							const minRuntimeQueue = findMinRuntimeQueue();
 							minRuntimeQueue.push(process);
 						});
+					// currentTask가 비었으면 queue에서 빼내서 currentTask에 넣기
 					context.currentTask = nextTasks.map((task, index) => {
 						if (task === null) {
 							const nextTask = context.queue[index].shift() as
