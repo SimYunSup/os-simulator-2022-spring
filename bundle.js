@@ -9666,10 +9666,9 @@ var app = (function () {
                         queueData.sort((a, b) => a.burstTime - b.burstTime);
                     });
                     context.currentTask = nextTasks.map((task, index) => {
-                        var _a;
                         const nextTask = context.queue[index][0];
                         if (!nextTask ||
-                            ((_a = task === null || task === void 0 ? void 0 : task.remainedTime) !== null && _a !== void 0 ? _a : 0 > nextTask.burstTime)) {
+                            (task && task.remainedTime < nextTask.burstTime)) {
                             return task;
                         }
                         const shiftedTask = context.queue[index].shift();
