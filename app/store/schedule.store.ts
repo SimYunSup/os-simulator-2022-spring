@@ -337,7 +337,7 @@ const scheduleMachine = createMachine(
 							| undefined;
 						if (
 							!nextTask ||
-							(task?.remainedTime ?? 0 > nextTask.burstTime)
+							(task && task.remainedTime < nextTask.burstTime)
 						) {
 							return task;
 						}
