@@ -404,18 +404,18 @@ const scheduleMachine = createMachine(
 					// queue마다 runtime 계산 후 runtime이 가장 작은 queue 반환
 					const findMinRuntimeQueue = () => {
 						let minRuntimeQueue = context.queue[0],
-							minRuntime = context.queue[0].reduce(
-								(prevVal, cur) => {
+							minRuntime =
+								context.queue[0].reduce((prevVal, cur) => {
 									prevVal +=
 										cur.burstTime /
 										(context.cpuData[0] === "P" ? 2 : 1);
 									prevVal = Math.ceil(prevVal);
 									return prevVal;
-								},
-								0
-							);
+								}, 0) +
+								(context.currentTask[0]?.remainedTime ?? 0) /
+									(context.cpuData[0] === "P" ? 2 : 1);
 						context.queue.forEach((queueData, index) => {
-							const currentRuntime = queueData.reduce(
+							let currentRuntime = queueData.reduce(
 								(prevVal, cur) => {
 									prevVal +=
 										cur.burstTime /
@@ -427,6 +427,11 @@ const scheduleMachine = createMachine(
 								},
 								0
 							);
+							currentRuntime +=
+								(context.currentTask[index]?.remainedTime ??
+									0) /
+								(context.cpuData[index] === "P" ? 2 : 1);
+							currentRuntime = Math.ceil(currentRuntime);
 							if (currentRuntime < minRuntime) {
 								minRuntime = currentRuntime;
 								minRuntimeQueue = queueData;
