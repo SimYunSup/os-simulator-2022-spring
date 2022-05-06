@@ -9721,15 +9721,19 @@ var app = (function () {
                 else if (context.type === "Custom") {
                     // queue마다 runtime 계산 후 runtime이 가장 작은 queue 반환
                     const findMinRuntimeQueue = () => {
+                        var _a, _b;
                         let minRuntimeQueue = context.queue[0], minRuntime = context.queue[0].reduce((prevVal, cur) => {
                             prevVal +=
                                 cur.burstTime /
                                     (context.cpuData[0] === "P" ? 2 : 1);
                             prevVal = Math.ceil(prevVal);
                             return prevVal;
-                        }, 0);
+                        }, 0) +
+                            ((_b = (_a = context.currentTask[0]) === null || _a === void 0 ? void 0 : _a.remainedTime) !== null && _b !== void 0 ? _b : 0) /
+                                (context.cpuData[0] === "P" ? 2 : 1);
                         context.queue.forEach((queueData, index) => {
-                            const currentRuntime = queueData.reduce((prevVal, cur) => {
+                            var _a, _b;
+                            let currentRuntime = queueData.reduce((prevVal, cur) => {
                                 prevVal +=
                                     cur.burstTime /
                                         (context.cpuData[index] === "P"
@@ -9738,6 +9742,10 @@ var app = (function () {
                                 prevVal = Math.ceil(prevVal);
                                 return prevVal;
                             }, 0);
+                            currentRuntime +=
+                                ((_b = (_a = context.currentTask[index]) === null || _a === void 0 ? void 0 : _a.remainedTime) !== null && _b !== void 0 ? _b : 0) /
+                                    (context.cpuData[index] === "P" ? 2 : 1);
+                            currentRuntime = Math.ceil(currentRuntime);
                             if (currentRuntime < minRuntime) {
                                 minRuntime = currentRuntime;
                                 minRuntimeQueue = queueData;
