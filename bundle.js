@@ -10816,7 +10816,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (57:3) {#each cpuData as cpu, index}
+    // (56:3) {#each cpuData as cpu, index}
     function create_each_block$1(ctx) {
     	let tr;
     	let td0;
@@ -10829,20 +10829,18 @@ var app = (function () {
     	let option0;
     	let option1;
     	let t5;
-    	let label;
-    	let t7;
     	let td2;
 
-    	let t8_value = (/*taskHistoryArray*/ ctx[2] && /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]]
+    	let t6_value = (/*taskHistoryArray*/ ctx[2] && /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]]
     	? /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]].reduce(func, 0).toFixed(2)
     	: 0) + "";
 
+    	let t6;
+    	let t7;
     	let t8;
-    	let t9;
-    	let t10;
     	let td3;
     	let button;
-    	let t12;
+    	let t10;
     	let mounted;
     	let dispose;
 
@@ -10868,38 +10866,36 @@ var app = (function () {
     			option1 = element("option");
     			option1.textContent = "E Core";
     			t5 = space();
-    			label = element("label");
-    			label.textContent = "Core Type";
-    			t7 = space();
     			td2 = element("td");
-    			t8 = text$1(t8_value);
-    			t9 = text$1(" W");
-    			t10 = space();
+    			t6 = text$1(t6_value);
+    			t7 = text$1(" W");
+    			t8 = space();
     			td3 = element("td");
     			button = element("button");
     			button.textContent = "-";
-    			t12 = space();
+    			t10 = space();
     			attr_dev(td0, "class", "svelte-6pnapc");
-    			add_location(td0, file$3, 58, 5, 1404);
+    			add_location(td0, file$3, 57, 5, 1480);
     			option0.__value = "P";
     			option0.value = option0.__value;
-    			add_location(option0, file$3, 63, 7, 1492);
+    			add_location(option0, file$3, 66, 7, 1639);
     			option1.__value = "E";
     			option1.value = option1.__value;
-    			add_location(option1, file$3, 64, 7, 1533);
+    			add_location(option1, file$3, 67, 7, 1680);
+    			attr_dev(select, "class", "no-autoinit");
+    			set_style(select, "display", "block");
     			if (/*cpu*/ ctx[7] === void 0) add_render_callback(select_change_handler);
-    			add_location(select, file$3, 62, 6, 1459);
-    			add_location(label, file$3, 66, 6, 1589);
+    			add_location(select, file$3, 61, 6, 1535);
     			attr_dev(td1, "class", "svelte-6pnapc");
-    			add_location(td1, file$3, 61, 5, 1448);
+    			add_location(td1, file$3, 60, 5, 1524);
     			attr_dev(td2, "class", "svelte-6pnapc");
-    			add_location(td2, file$3, 68, 5, 1630);
+    			add_location(td2, file$3, 70, 5, 1746);
     			attr_dev(button, "class", "waves-effect waves-light btn btn-small red accent-4");
-    			add_location(button, file$3, 85, 6, 1986);
+    			add_location(button, file$3, 87, 6, 2102);
     			attr_dev(td3, "class", "svelte-6pnapc");
-    			add_location(td3, file$3, 84, 5, 1975);
+    			add_location(td3, file$3, 86, 5, 2091);
     			attr_dev(tr, "class", "svelte-6pnapc");
-    			add_location(tr, file$3, 57, 4, 1394);
+    			add_location(tr, file$3, 56, 4, 1470);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, tr, anchor);
@@ -10912,16 +10908,14 @@ var app = (function () {
     			append_dev(select, option0);
     			append_dev(select, option1);
     			select_option(select, /*cpu*/ ctx[7]);
-    			append_dev(td1, t5);
-    			append_dev(td1, label);
-    			append_dev(tr, t7);
+    			append_dev(tr, t5);
     			append_dev(tr, td2);
-    			append_dev(td2, t8);
-    			append_dev(td2, t9);
-    			append_dev(tr, t10);
+    			append_dev(td2, t6);
+    			append_dev(td2, t7);
+    			append_dev(tr, t8);
     			append_dev(tr, td3);
     			append_dev(td3, button);
-    			append_dev(tr, t12);
+    			append_dev(tr, t10);
 
     			if (!mounted) {
     				dispose = [
@@ -10939,9 +10933,9 @@ var app = (function () {
     				select_option(select, /*cpu*/ ctx[7]);
     			}
 
-    			if (dirty & /*taskHistoryArray, definedCpuData*/ 6 && t8_value !== (t8_value = (/*taskHistoryArray*/ ctx[2] && /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]]
+    			if (dirty & /*taskHistoryArray, definedCpuData*/ 6 && t6_value !== (t6_value = (/*taskHistoryArray*/ ctx[2] && /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]]
     			? /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]].reduce(func, 0).toFixed(2)
-    			: 0) + "")) set_data_dev(t8, t8_value);
+    			: 0) + "")) set_data_dev(t6, t6_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(tr);
@@ -10954,7 +10948,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(57:3) {#each cpuData as cpu, index}",
+    		source: "(56:3) {#each cpuData as cpu, index}",
     		ctx
     	});
 
@@ -11011,20 +11005,20 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(th0, file$3, 44, 4, 1134);
-    			add_location(th1, file$3, 45, 4, 1151);
-    			add_location(th2, file$3, 46, 4, 1169);
+    			add_location(th0, file$3, 43, 4, 1210);
+    			add_location(th1, file$3, 44, 4, 1227);
+    			add_location(th2, file$3, 45, 4, 1245);
     			attr_dev(button, "class", "waves-effect waves-light btn btn-small blue accent-4");
-    			add_location(button, file$3, 48, 5, 1197);
-    			add_location(th3, file$3, 47, 4, 1187);
+    			add_location(button, file$3, 47, 5, 1273);
+    			add_location(th3, file$3, 46, 4, 1263);
     			attr_dev(tr, "class", "svelte-6pnapc");
-    			add_location(tr, file$3, 43, 3, 1125);
-    			add_location(thead, file$3, 42, 2, 1114);
-    			add_location(tbody, file$3, 55, 2, 1349);
+    			add_location(tr, file$3, 42, 3, 1201);
+    			add_location(thead, file$3, 41, 2, 1190);
+    			add_location(tbody, file$3, 54, 2, 1425);
     			attr_dev(table, "class", "cputable__table svelte-6pnapc");
-    			add_location(table, file$3, 41, 1, 1080);
+    			add_location(table, file$3, 40, 1, 1156);
     			attr_dev(article, "class", "cputable svelte-6pnapc");
-    			add_location(article, file$3, 40, 0, 1052);
+    			add_location(article, file$3, 39, 0, 1128);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -11127,18 +11121,20 @@ var app = (function () {
 
     	service.onTransition(state => {
     		if (state.matches("setup.pending.cpu.idle")) {
-    			send({ type: "send.cpu", payload: { cpuData } });
+    			const newCPUData = Array.from(cpuData);
+    			newCPUData.sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0));
+    			$$invalidate(0, cpuData = newCPUData);
+
+    			send({
+    				type: "send.cpu",
+    				payload: { cpuData: newCPUData }
+    			});
     		}
 
     		if (state.matches("setup.idle") && state.context.taskHistoryArray.length !== 0) {
     			$$invalidate(2, taskHistoryArray = state.context.taskHistoryArray);
     			$$invalidate(1, definedCpuData = Array.from(cpuData));
     		}
-    	});
-
-    	afterUpdate(() => {
-    		// eslint-disable-next-line no-undef
-    		M.AutoInit();
     	});
 
     	const writable_props = [];
