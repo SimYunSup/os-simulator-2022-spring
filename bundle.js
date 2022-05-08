@@ -9562,6 +9562,7 @@ var app = (function () {
                 });
                 // work stealing
                 if (context.queue.flat(2).length !== 0) {
+                    // queue의 실행시간 계산 및 {runtime: 실행시간, id: index} 객체로 변경
                     const queueRunTime = context.queue.map((queueData, index) => ({
                         runtime: queueData.reduce((prevVal, cur) => {
                             prevVal +=
@@ -9572,14 +9573,16 @@ var app = (function () {
                         }, 0),
                         id: index,
                     }));
+                    // 객체 runtime을 기준으로 오름차순 정렬
                     queueRunTime.sort((a, b) => a.runtime - b.runtime);
                     const maxRuntimeQueueData = queueRunTime[queueRunTime.length - 1];
                     const minRuntimeQueueData = queueRunTime[0];
                     const maxRuntimeQueue = context.queue[maxRuntimeQueueData.id];
                     const minRuntimeQueue = context.queue[minRuntimeQueueData.id];
+                    // maxRuntime의 맨 마지막 process가 minRuntime에 들어갈 경우 더 빨리 끝나면 옮긴다.
                     if (Math.ceil(maxRuntimeQueue[maxRuntimeQueue.length - 1]
                         .burstTime /
-                        (context.cpuData[maxRuntimeQueueData.id] === "P"
+                        (context.cpuData[minRuntimeQueueData.id] === "P"
                             ? 2
                             : 1)) <=
                         maxRuntimeQueueData.runtime -
@@ -9666,10 +9669,9 @@ var app = (function () {
                         queueData.sort((a, b) => a.burstTime - b.burstTime);
                     });
                     context.currentTask = nextTasks.map((task, index) => {
-                        var _a;
                         const nextTask = context.queue[index][0];
                         if (!nextTask ||
-                            ((_a = task === null || task === void 0 ? void 0 : task.remainedTime) !== null && _a !== void 0 ? _a : 0 > nextTask.burstTime)) {
+                            (task && task.remainedTime < nextTask.burstTime)) {
                             return task;
                         }
                         const shiftedTask = context.queue[index].shift();
@@ -9717,16 +9719,21 @@ var app = (function () {
                     });
                 }
                 else if (context.type === "Custom") {
+                    // queue마다 runtime 계산 후 runtime이 가장 작은 queue 반환
                     const findMinRuntimeQueue = () => {
+                        var _a, _b;
                         let minRuntimeQueue = context.queue[0], minRuntime = context.queue[0].reduce((prevVal, cur) => {
                             prevVal +=
                                 cur.burstTime /
                                     (context.cpuData[0] === "P" ? 2 : 1);
                             prevVal = Math.ceil(prevVal);
                             return prevVal;
-                        }, 0);
+                        }, 0) +
+                            ((_b = (_a = context.currentTask[0]) === null || _a === void 0 ? void 0 : _a.remainedTime) !== null && _b !== void 0 ? _b : 0) /
+                                (context.cpuData[0] === "P" ? 2 : 1);
                         context.queue.forEach((queueData, index) => {
-                            const currentRuntime = queueData.reduce((prevVal, cur) => {
+                            var _a, _b;
+                            let currentRuntime = queueData.reduce((prevVal, cur) => {
                                 prevVal +=
                                     cur.burstTime /
                                         (context.cpuData[index] === "P"
@@ -9735,6 +9742,10 @@ var app = (function () {
                                 prevVal = Math.ceil(prevVal);
                                 return prevVal;
                             }, 0);
+                            currentRuntime +=
+                                ((_b = (_a = context.currentTask[index]) === null || _a === void 0 ? void 0 : _a.remainedTime) !== null && _b !== void 0 ? _b : 0) /
+                                    (context.cpuData[index] === "P" ? 2 : 1);
+                            currentRuntime = Math.ceil(currentRuntime);
                             if (currentRuntime < minRuntime) {
                                 minRuntime = currentRuntime;
                                 minRuntimeQueue = queueData;
@@ -9742,12 +9753,14 @@ var app = (function () {
                         });
                         return minRuntimeQueue;
                     };
+                    // 현재 들어가야 하는 process를 runtime이 가장 작은 queue에 넣음
                     context.processData
                         .filter((process) => process.arrivalTime === context.currentTime)
                         .forEach((process) => {
                         const minRuntimeQueue = findMinRuntimeQueue();
                         minRuntimeQueue.push(process);
                     });
+                    // currentTask가 비었으면 queue에서 빼내서 currentTask에 넣기
                     context.currentTask = nextTasks.map((task, index) => {
                         if (task === null) {
                             const nextTask = context.queue[index].shift();
@@ -10813,7 +10826,7 @@ var app = (function () {
     	let t7;
     	let td2;
 
-    	let t8_value = (/*taskHistoryArray*/ ctx[2]
+    	let t8_value = (/*taskHistoryArray*/ ctx[2] && /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]]
     	? /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]].reduce(func, 0).toFixed(2)
     	: 0) + "";
 
@@ -10875,9 +10888,9 @@ var app = (function () {
     			attr_dev(td2, "class", "svelte-6pnapc");
     			add_location(td2, file$3, 68, 5, 1630);
     			attr_dev(button, "class", "waves-effect waves-light btn btn-small red accent-4");
-    			add_location(button, file$3, 85, 6, 1959);
+    			add_location(button, file$3, 85, 6, 1986);
     			attr_dev(td3, "class", "svelte-6pnapc");
-    			add_location(td3, file$3, 84, 5, 1948);
+    			add_location(td3, file$3, 84, 5, 1975);
     			attr_dev(tr, "class", "svelte-6pnapc");
     			add_location(tr, file$3, 57, 4, 1394);
     		},
@@ -10919,7 +10932,7 @@ var app = (function () {
     				select_option(select, /*cpu*/ ctx[7]);
     			}
 
-    			if (dirty & /*taskHistoryArray, definedCpuData*/ 6 && t8_value !== (t8_value = (/*taskHistoryArray*/ ctx[2]
+    			if (dirty & /*taskHistoryArray, definedCpuData*/ 6 && t8_value !== (t8_value = (/*taskHistoryArray*/ ctx[2] && /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]]
     			? /*taskHistoryArray*/ ctx[2][/*index*/ ctx[9]].reduce(func, 0).toFixed(2)
     			: 0) + "")) set_data_dev(t8, t8_value);
     		},
