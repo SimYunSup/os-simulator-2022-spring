@@ -218,7 +218,7 @@ const scheduleMachine = createMachine(
 								(context.cpuData[maxRuntimeQueueData.id] === "P"
 									? 2
 									: 1)
-						) <
+						) <=
 						maxRuntimeQueueData.runtime -
 							minRuntimeQueueData.runtime
 					) {
