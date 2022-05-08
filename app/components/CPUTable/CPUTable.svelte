@@ -22,10 +22,13 @@
 	};
 	service.onTransition((state) => {
 		if (state.matches("setup.pending.cpu.idle")) {
+			const newCPUData = Array.from(cpuData);
+			newCPUData.sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0));
+			cpuData = newCPUData;
 			send({
 				type: "send.cpu",
 				payload: {
-					cpuData,
+					cpuData: newCPUData,
 				},
 			});
 		}
@@ -36,11 +39,6 @@
 			taskHistoryArray = state.context.taskHistoryArray;
 			definedCpuData = Array.from(cpuData);
 		}
-	});
-
-	afterUpdate(() => {
-		// eslint-disable-next-line no-undef
-		M.AutoInit();
 	});
 </script>
 
@@ -66,11 +64,14 @@
 						Core {index + 1}
 					</td>
 					<td>
-						<select bind:value={cpu}>
+						<select
+							class="no-autoinit"
+							style="display: block"
+							bind:value={cpu}
+						>
 							<option value="P">P Core</option>
 							<option value="E">E Core</option>
 						</select>
-						<label>Core Type</label>
 					</td>
 					<td>
 						{taskHistoryArray && taskHistoryArray[index]
