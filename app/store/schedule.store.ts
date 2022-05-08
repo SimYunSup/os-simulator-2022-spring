@@ -205,7 +205,16 @@ const scheduleMachine = createMachine(
 						})
 					);
 					// 객체 runtime을 기준으로 오름차순 정렬
-					queueRunTime.sort((a, b) => a.runtime - b.runtime);
+					queueRunTime.sort((a, b) => {
+						if (a.runtime === b.runtime) {
+							return (
+								context.cpuData[b.id].charCodeAt(0) -
+								context.cpuData[a.id].charCodeAt(0)
+							);
+						}
+						return a.runtime - b.runtime;
+					});
+					console.log(queueRunTime);
 					const maxRuntimeQueueData =
 						queueRunTime[queueRunTime.length - 1];
 					const minRuntimeQueueData = queueRunTime[0];
