@@ -9562,7 +9562,6 @@ var app = (function () {
                 });
                 // work stealing
                 if (context.queue.flat(2).length !== 0) {
-                    // queue의 실행시간 계산 및 {runtime: 실행시간, id: index} 객체로 변경
                     const queueRunTime = context.queue.map((queueData, index) => ({
                         runtime: queueData.reduce((prevVal, cur) => {
                             prevVal +=
@@ -9573,18 +9572,16 @@ var app = (function () {
                         }, 0),
                         id: index,
                     }));
-                    // 객체 runtime을 기준으로 오름차순 정렬
                     queueRunTime.sort((a, b) => a.runtime - b.runtime);
                     const maxRuntimeQueueData = queueRunTime[queueRunTime.length - 1];
                     const minRuntimeQueueData = queueRunTime[0];
                     const maxRuntimeQueue = context.queue[maxRuntimeQueueData.id];
                     const minRuntimeQueue = context.queue[minRuntimeQueueData.id];
-                    // maxRuntime의 맨 마지막 process가 minRuntime에 들어갈 경우 더 빨리 끝나면 옮긴다.
                     if (Math.ceil(maxRuntimeQueue[maxRuntimeQueue.length - 1]
                         .burstTime /
-                        (context.cpuData[minRuntimeQueueData.id] === "P"
+                        (context.cpuData[maxRuntimeQueueData.id] === "P"
                             ? 2
-                            : 1)) <
+                            : 1)) <=
                         maxRuntimeQueueData.runtime -
                             minRuntimeQueueData.runtime) {
                         const stolenData = maxRuntimeQueue.pop();
@@ -9669,9 +9666,10 @@ var app = (function () {
                         queueData.sort((a, b) => a.burstTime - b.burstTime);
                     });
                     context.currentTask = nextTasks.map((task, index) => {
+                        var _a;
                         const nextTask = context.queue[index][0];
                         if (!nextTask ||
-                            (task && task.remainedTime < nextTask.burstTime)) {
+                            ((_a = task === null || task === void 0 ? void 0 : task.remainedTime) !== null && _a !== void 0 ? _a : 0 > nextTask.burstTime)) {
                             return task;
                         }
                         const shiftedTask = context.queue[index].shift();
@@ -9719,21 +9717,16 @@ var app = (function () {
                     });
                 }
                 else if (context.type === "Custom") {
-                    // queue마다 runtime 계산 후 runtime이 가장 작은 queue 반환
                     const findMinRuntimeQueue = () => {
-                        var _a, _b;
                         let minRuntimeQueue = context.queue[0], minRuntime = context.queue[0].reduce((prevVal, cur) => {
                             prevVal +=
                                 cur.burstTime /
                                     (context.cpuData[0] === "P" ? 2 : 1);
                             prevVal = Math.ceil(prevVal);
                             return prevVal;
-                        }, 0) +
-                            ((_b = (_a = context.currentTask[0]) === null || _a === void 0 ? void 0 : _a.remainedTime) !== null && _b !== void 0 ? _b : 0) /
-                                (context.cpuData[0] === "P" ? 2 : 1);
+                        }, 0);
                         context.queue.forEach((queueData, index) => {
-                            var _a, _b;
-                            let currentRuntime = queueData.reduce((prevVal, cur) => {
+                            const currentRuntime = queueData.reduce((prevVal, cur) => {
                                 prevVal +=
                                     cur.burstTime /
                                         (context.cpuData[index] === "P"
@@ -9742,10 +9735,6 @@ var app = (function () {
                                 prevVal = Math.ceil(prevVal);
                                 return prevVal;
                             }, 0);
-                            currentRuntime +=
-                                ((_b = (_a = context.currentTask[index]) === null || _a === void 0 ? void 0 : _a.remainedTime) !== null && _b !== void 0 ? _b : 0) /
-                                    (context.cpuData[index] === "P" ? 2 : 1);
-                            currentRuntime = Math.ceil(currentRuntime);
                             if (currentRuntime < minRuntime) {
                                 minRuntime = currentRuntime;
                                 minRuntimeQueue = queueData;
@@ -9753,14 +9742,12 @@ var app = (function () {
                         });
                         return minRuntimeQueue;
                     };
-                    // 현재 들어가야 하는 process를 runtime이 가장 작은 queue에 넣음
                     context.processData
                         .filter((process) => process.arrivalTime === context.currentTime)
                         .forEach((process) => {
                         const minRuntimeQueue = findMinRuntimeQueue();
                         minRuntimeQueue.push(process);
                     });
-                    // currentTask가 비었으면 queue에서 빼내서 currentTask에 넣기
                     context.currentTask = nextTasks.map((task, index) => {
                         if (task === null) {
                             const nextTask = context.queue[index].shift();
