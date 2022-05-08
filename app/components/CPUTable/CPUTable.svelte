@@ -73,7 +73,7 @@
 						<label>Core Type</label>
 					</td>
 					<td>
-						{taskHistoryArray
+						{taskHistoryArray && taskHistoryArray[index]
 							? taskHistoryArray[index]
 									.reduce(
 										(prev, cur) =>
